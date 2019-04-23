@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="false">
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="Threshold" value="ALL" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d][%p,%c{1}] %m%n" />
+		</layout>
+	</appender>
+	<appender name="CONSOLEASYNC" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="512" />
+		<appender-ref ref="CONSOLE" />
+	</appender>
+	<appender name="FileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${log4jLogpath}" />
+		<param name="Threshold" value="ALL" />
+		<param name="MaxFileSize" value="100000KB" />
+		<param name="MaxBackupIndex" value="10000" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss} %p][%c]%m%n" />
+		</layout>
+	</appender>
+	<appender name="FileAppenderASYNC" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="512" />
+		<appender-ref ref="FileAppender" />
+	</appender>
+	<root>
+		<level value="info" />
+		<appender-ref ref="CONSOLEASYNC" />
+		<appender-ref ref="FileAppenderASYNC" />
+	</root>
+</log4j:configuration>
+
