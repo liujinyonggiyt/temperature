@@ -1,7 +1,5 @@
 package com.ljy.misc.msg;
 
-import com.heishi.commons.GamePlayer;
-import com.heishi.commons.logs.LoggerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
