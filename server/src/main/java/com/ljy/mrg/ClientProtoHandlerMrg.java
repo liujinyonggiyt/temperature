@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.ljy.ProtoEnum;
 import com.ljy.misc.msg.ClientProtoHandler;
+import com.ljy.misc.msg.ClientRequest;
 import com.ljy.misc.session.ClientSession;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
@@ -37,11 +38,11 @@ public class ClientProtoHandlerMrg{
 	 *            协议枚举
 	 * @param channel
 	 *            连接对象
-	 * @param proto
+	 * @param clientRequest
 	 *            协议对象
 	 */
 	public final void handleClientProto(ProtoEnum protoEnum,Channel channel,
-			Object proto) throws Exception
+										ClientRequest clientRequest) throws Exception
 	{
 
 		ClientProtoHandler clientProtoHandler = clientProtoHandlers
@@ -56,7 +57,7 @@ public class ClientProtoHandlerMrg{
 		ClientSession clientSession = clientSessionMrg.getSessionByChannel(channel);
 		if(null != clientSession)
 		{
-			clientProtoHandler.handle(channel,clientSession,proto);
+			clientProtoHandler.handle(clientSession,clientRequest);
 		}
 
 	}

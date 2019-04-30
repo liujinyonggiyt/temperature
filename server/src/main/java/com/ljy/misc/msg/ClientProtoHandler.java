@@ -13,5 +13,5 @@ public interface ClientProtoHandler {
      * @param proto
      * @return
      */
-    boolean handle(Channel channel, ClientSession clientSession, ClientRequest proto) throws Exception;
+    boolean handle(ClientSession clientSession, ClientRequest clientRequest) throws Exception;
 }

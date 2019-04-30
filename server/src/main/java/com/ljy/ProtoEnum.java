@@ -6,5 +6,6 @@ package com.ljy;
  * Time:11:21
  */
 public enum ProtoEnum {
-    C_TEST
+    C_TEST,
+    S_TEST_RESULT;
 }

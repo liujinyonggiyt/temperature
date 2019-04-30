@@ -1,9 +1,5 @@
 package com.ljy.starter;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.ljy.ModuleApp;
-import com.ljy.World;
 import com.ljy.misc.GlobalQueue;
 
 import java.io.File;

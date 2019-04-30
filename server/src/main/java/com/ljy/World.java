@@ -6,11 +6,13 @@ import com.ljy.misc.EventConsumer;
 import com.ljy.misc.LogicEvent;
 import com.ljy.misc.LogicEventType;
 import com.ljy.misc.msg.ClientRequest;
+import com.ljy.misc.msg.ServerResponse;
 import com.ljy.misc.msg.SystemTimeMrg;
 import com.ljy.misc.session.ClientSession;
 import com.ljy.misc.utils.AnyUtils;
 import com.ljy.mrg.ClientProtoHandlerMrg;
 import com.ljy.mrg.ClientSessionMrg;
+import com.ljy.mrg.SendMrg;
 import com.ljy.mrg.TimerMrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +32,17 @@ public class World extends EventConsumer<LogicEvent> {
     private final ClientProtoHandlerMrg clientProtoHandlerMrg;
     private final ClientSessionMrg clientSessionMrg;
     private final SystemTimeMrg systemTimeMrg;
+    private final SendMrg sendMrg;
 
     protected final Map<LogicEventType,AsynchronizedEventHandler> logicEventMrg = new EnumMap<>(
             LogicEventType.class);
     @Inject
-    public World(TimerMrg timerMrg, ClientProtoHandlerMrg clientProtoHandlerMrg, ClientSessionMrg clientSessionMrg, SystemTimeMrg systemTimeMrg) {
+    public World(TimerMrg timerMrg, ClientProtoHandlerMrg clientProtoHandlerMrg, ClientSessionMrg clientSessionMrg, SystemTimeMrg systemTimeMrg, SendMrg sendMrg) {
         this.timerMrg = timerMrg;
         this.clientProtoHandlerMrg = clientProtoHandlerMrg;
         this.clientSessionMrg = clientSessionMrg;
         this.systemTimeMrg = systemTimeMrg;
+        this.sendMrg = sendMrg;
     }
 
     protected void initWhenThreadStart() throws Exception {
@@ -50,7 +54,16 @@ public class World extends EventConsumer<LogicEvent> {
     }
 
     private void registProtoHandlers(){
+        clientProtoHandlerMrg.registerClient(ProtoEnum.C_TEST, this::C_TEST_handler);
+    }
 
+    private boolean C_TEST_handler(ClientSession clientSession, ClientRequest clientRequest)throws Exception{
+        String msg = clientRequest.getString();
+        logger.info("收到客户端消息："+msg);
+        ServerResponse response = new ServerResponse(ProtoEnum.S_TEST_RESULT);
+        response.writeUTF("server receive msg:"+msg);
+        sendMrg.sendToClientForAAAAAAAA(clientSession.getChannel(), response);
+        return true;
     }
 
     /**
