@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import ljy.APP;
-import ljy.base.bean.MessageBean;
+import ljy.base.bean.BlueMessageBean;
 import ljy.utils.MyLog;
 
 /**
@@ -47,7 +47,7 @@ public class ReceiveSocketService {
 
 
                 while ((json = bff.readLine()) != null) {
-                    EventBus.getDefault().post(new MessageBean(RECEIVER_MESSAGE,json));
+                    EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE,json));
                 }
                 if ("file".equals(json)) {
                     FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() + "/test.gif");
@@ -62,7 +62,7 @@ public class ReceiveSocketService {
                         //这里通过先前传递过来的文件大小作为参照，因为该文件流不能自主停止，所以通过判断文件大小来跳出循环
                     }
                     fos.close();
-                    EventBus.getDefault().post(new MessageBean(RECEIVER_FILE,"文件保存成功"));
+                    EventBus.getDefault().post(new BlueMessageBean(RECEIVER_FILE,"文件保存成功"));
                 }
             }
         } catch (IOException e) {

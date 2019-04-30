@@ -10,15 +10,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ljy.base.activity.BaseActivity;
-import ljy.base.bean.MessageBean;
+import ljy.base.bean.BlueMessageBean;
 import ljy.base.constant.BltContant;
 import ljy.bluetooth.R;
 import ljy.service.ReceiveSocketService;
@@ -88,15 +86,15 @@ public class BluetoothTongxunActivity extends BaseActivity {
      * BltContant.SEND_TEXT_SUCCESS:发送消息成功
      *BltContant.SEND_FILE_NOTEXIT:文件不存在
      * BltContant.SEND_FILE_IS_FOLDER:不能发送文件夹
-     * @param messageBean
+     * @param blueMessageBean
      */
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageBean messageBean) {
-        switch (messageBean.getId()) {
+    public void onMessageEvent(BlueMessageBean blueMessageBean) {
+        switch (blueMessageBean.getId()) {
             case ReceiveSocketService.RECEIVER_MESSAGE:
-                MyLog.d("收到消息", messageBean.getContent());
-                text.append("收到消息:" + messageBean.getContent() + "\n");
+                MyLog.d("收到消息", blueMessageBean.getContent());
+                text.append("收到消息:" + blueMessageBean.getContent() + "\n");
                 break;
             case BltContant.SEND_TEXT_SUCCESS:
                 text.append("我:" + goEditText.getText().toString() + "\n");

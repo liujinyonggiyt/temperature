@@ -10,10 +10,7 @@ import com.ljy.misc.msg.ServerResponse;
 import com.ljy.misc.msg.SystemTimeMrg;
 import com.ljy.misc.session.ClientSession;
 import com.ljy.misc.utils.AnyUtils;
-import com.ljy.mrg.ClientProtoHandlerMrg;
-import com.ljy.mrg.ClientSessionMrg;
-import com.ljy.mrg.SendMrg;
-import com.ljy.mrg.TimerMrg;
+import com.ljy.mrg.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,16 +30,18 @@ public class World extends EventConsumer<LogicEvent> {
     private final ClientSessionMrg clientSessionMrg;
     private final SystemTimeMrg systemTimeMrg;
     private final SendMrg sendMrg;
+    private final TcpOuterMrg tcpOuterMrg;
 
     protected final Map<LogicEventType,AsynchronizedEventHandler> logicEventMrg = new EnumMap<>(
             LogicEventType.class);
     @Inject
-    public World(TimerMrg timerMrg, ClientProtoHandlerMrg clientProtoHandlerMrg, ClientSessionMrg clientSessionMrg, SystemTimeMrg systemTimeMrg, SendMrg sendMrg) {
+    public World(TimerMrg timerMrg, ClientProtoHandlerMrg clientProtoHandlerMrg, ClientSessionMrg clientSessionMrg, SystemTimeMrg systemTimeMrg, SendMrg sendMrg, TcpOuterMrg tcpOuterMrg) {
         this.timerMrg = timerMrg;
         this.clientProtoHandlerMrg = clientProtoHandlerMrg;
         this.clientSessionMrg = clientSessionMrg;
         this.systemTimeMrg = systemTimeMrg;
         this.sendMrg = sendMrg;
+        this.tcpOuterMrg = tcpOuterMrg;
     }
 
     protected void initWhenThreadStart() throws Exception {

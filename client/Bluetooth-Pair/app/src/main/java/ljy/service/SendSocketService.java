@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import ljy.APP;
-import ljy.base.bean.MessageBean;
+import ljy.base.bean.BlueMessageBean;
 import ljy.base.constant.BltContant;
 import ljy.utils.MyLog;
 
@@ -32,7 +32,7 @@ public class SendSocketService {
             OutputStream outputStream = APP.bluetoothSocket.getOutputStream();
             outputStream.write(message.getBytes("utf-8"));
             outputStream.flush();
-            EventBus.getDefault().post(new MessageBean(BltContant.SEND_TEXT_SUCCESS));
+            EventBus.getDefault().post(new BlueMessageBean(BltContant.SEND_TEXT_SUCCESS));
         } catch (IOException e) {
             MyLog.e(TAG, e.getMessage(), e);
         }
@@ -49,13 +49,13 @@ public class SendSocketService {
             File file = new File(filePath);
             //说明不存在该文件
             if (!file.exists()){
-                EventBus.getDefault().post(new MessageBean(BltContant.SEND_FILE_NOTEXIT));
+                EventBus.getDefault().post(new BlueMessageBean(BltContant.SEND_FILE_NOTEXIT));
                 return;
             }
 
             //说明该文件是一个文件夹
             if (file.isDirectory()) {
-                EventBus.getDefault().post(new MessageBean(BltContant.SEND_FILE_IS_FOLDER));
+                EventBus.getDefault().post(new BlueMessageBean(BltContant.SEND_FILE_IS_FOLDER));
                 return;
             }
 
@@ -78,7 +78,7 @@ public class SendSocketService {
             //该方法无效
             //outputStream.write("\n".getBytes());
             outputStream.flush();
-            EventBus.getDefault().post(new MessageBean(BltContant.SEND_FILE_SUCCESS));
+            EventBus.getDefault().post(new BlueMessageBean(BltContant.SEND_FILE_SUCCESS));
         } catch (IOException e) {
             e.printStackTrace();
         }

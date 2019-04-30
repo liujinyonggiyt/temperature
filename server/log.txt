@@ -1,2 +1,13 @@
 [2019-04-30 12:37:46 INFO][com.ljy.misc.EventConsumer]logic thread starting
 [2019-04-30 12:37:46 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-04-30 17:36:09 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-04-30 17:36:09 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-04-30 17:38:00 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-04-30 17:38:01 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-04-30 17:38:32 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-04-30 17:38:32 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-04-30 17:38:48 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-04-30 17:38:48 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-04-30 17:39:25 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-04-30 17:39:25 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-04-30 17:39:25 INFO][com.ljy.misc.EventConsumer]logic thread started

@@ -4,6 +4,8 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.ljy.misc.net.ConnectionInfo;
 import com.ljy.misc.net.Server2ClientChannelInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Author:liujinyong
@@ -11,11 +13,13 @@ import com.ljy.misc.net.Server2ClientChannelInitializer;
  * Time:18:20
  */
 public class TcpOuterMrg {
+    private static final Logger logger = LoggerFactory.getLogger(TcpOuterMrg.class);
     private final ConnectionInfo outerConnectionInfo;
     @Inject
     public TcpOuterMrg(AcceptorMrg acceptorMrg, EventGroupMrg eventGroupMrg) {
 
         outerConnectionInfo = acceptorMrg.acceptRange(10001, 10001, new Server2ClientChannelInitializer(), eventGroupMrg.getBossGroup(), eventGroupMrg.getWorkGroup());
         Preconditions.checkArgument(null!=outerConnectionInfo);
+        logger.info("server out tcp listen success!ip:{}, port:{}", outerConnectionInfo.getHost(), outerConnectionInfo.getPort());
     }
 }
