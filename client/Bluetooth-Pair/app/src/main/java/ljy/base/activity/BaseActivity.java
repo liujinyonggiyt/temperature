@@ -14,7 +14,8 @@ import android.view.WindowManager;
 
 import org.greenrobot.eventbus.EventBus;
 
-import ljy.widget.TitleBar;
+import butterknife.ButterKnife;
+import ljy.utils.MyLog;
 
 
 /**
@@ -22,44 +23,50 @@ import ljy.widget.TitleBar;
  */
 
 public abstract class BaseActivity extends Activity {
-
+    public final String Tag = this.getClass().getSimpleName();
     public Activity mActivity;
-
-    private TitleBar titleBar;
-    private final static int RUNTIME_PERMISSION_REQUEST_CODE = 0x1;
-
-
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
-        EventBus.getDefault().register(this);
-        mActivity = this;
+        try{
+            setContentView(getLayoutId());
+            ButterKnife.bind(this);
+            EventBus.getDefault().register(this);
+            mActivity = this;
 
-        boolean isImmersive = false;
-        if (hasKitKat() && !hasLollipop()) {
-            isImmersive = true;
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //透明导航栏
-            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        } else if (hasLollipop()) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    //                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            isImmersive = true;
+            boolean isImmersive = false;
+            if (hasKitKat() && !hasLollipop()) {
+                isImmersive = true;
+                //透明状态栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                //透明导航栏
+                //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            } else if (hasLollipop()) {
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        //                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+                isImmersive = true;
+            }
+            //申请权限-外部存储
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            }
+        }catch (Exception e){
+            MyLog.e(Tag, e.getMessage(), e);
         }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public static boolean hasKitKat() {

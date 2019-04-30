@@ -13,7 +13,6 @@ import ljy.utils.MyLog;
 import ljy.utils.ToastUtil;
 
 /**
- * Created by  Huanglinqing on 2018/8/24/024.
  * 蓝牙广播服务
  */
 

@@ -15,13 +15,10 @@ import ljy.base.constant.BltContant;
 import ljy.utils.MyLog;
 
 /**
- * Created by Huanglinqing on 2018/8/25/025 21:08
- * E-Mail Address：1306214077@qq.com
  * 发送消息
  */
 public class SendSocketService {
-
-
+    private static final String TAG = SendSocketService.class.getSimpleName();
 
     /**
      * 发送文本消息
@@ -37,7 +34,7 @@ public class SendSocketService {
             outputStream.flush();
             EventBus.getDefault().post(new MessageBean(BltContant.SEND_TEXT_SUCCESS));
         } catch (IOException e) {
-            e.printStackTrace();
+            MyLog.e(TAG, e.getMessage(), e);
         }
     }
 

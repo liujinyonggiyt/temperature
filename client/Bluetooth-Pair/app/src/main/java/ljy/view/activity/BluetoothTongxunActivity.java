@@ -28,7 +28,7 @@ import ljy.utils.ToastUtil;
 import ljy.utils.factory.ThreadPoolProxyFactory;
 import ljy.widget.TitleBar;
 
-public class Tongxun extends BaseActivity {
+public class BluetoothTongxunActivity extends BaseActivity {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -47,7 +47,6 @@ public class Tongxun extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         titlebar.setTitle(getIntent().getStringExtra("devicename"));
         titlebar.setBackgroundResource(R.color.blue);
         titlebar.setImmersive(true);
@@ -64,13 +63,6 @@ public class Tongxun extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_tongxun;
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
 

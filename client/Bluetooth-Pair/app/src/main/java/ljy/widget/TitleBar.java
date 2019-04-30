@@ -18,9 +18,6 @@ import android.widget.TextView;
 import java.util.LinkedList;
 
 /**
- * 类描述：
- * 创建人：Huanglinqing
- *
  *
  * 沉浸式状态栏
  */

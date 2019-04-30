@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">Bluetooth</string>
+    <string name="app_name">智能温度计</string>
+    <string name="main_bluetooth_menu">打开蓝牙菜单</string>
+    <string name="main_socket_menu">打开网络菜单</string>
     <string name="huoqubveidilanyamingcheng">获取本地蓝牙名称</string>
     <string name="fasong">发送</string>
     <string name="qingshurufasongdexinxi">请输入发送的信息</string>
     <string name="ceshishebei">测试设备</string>
+    <string name="connect_server">连接服务器</string>
 </resources>

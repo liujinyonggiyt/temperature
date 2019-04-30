@@ -11,13 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ljy.widget.TitleBar>
     <Button
-        android:id="@+id/buttion_go_blue"
-        android:text="@string/main_bluetooth_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/buttion_go_socket"
-        android:text="@string/main_socket_menu"
+        android:id="@+id/buttion_connet_server"
+        android:text="@string/connect_server"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

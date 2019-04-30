@@ -15,11 +15,10 @@ import ljy.base.manger.BltManager;
 import ljy.utils.MyLog;
 
 /**
- * Created by Huanglinqing on 2018/8/25/025 18:43
- * E-Mail Address：1306214077@qq.com
  * 蓝牙服务端管理类 单例模式
  */
 public class BltService {
+    public static final String TAG = "BltService";
 
     public static final int SERVER_ACCEPT = 11;//回调标记
 
@@ -83,7 +82,7 @@ public class BltService {
                     //break;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                MyLog.e(TAG, e.getMessage(), e);
             }
         }
     }

@@ -12,6 +12,7 @@ import java.net.Socket;
 import ljy.utils.MyLog;
 
 public class SocketConnect {
+    private static final String TAG = "SocketConnect";
     private String ip;
     private int port;
     private Callback callback;
@@ -26,7 +27,6 @@ public class SocketConnect {
     private Thread mThread;
     private byte[] buffer = new byte[1024];
 
-    private String TAG = "SocketConnect";
 
     private Thread watchThread = null;
 

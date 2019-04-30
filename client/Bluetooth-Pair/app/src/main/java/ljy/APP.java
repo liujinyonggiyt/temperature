@@ -15,12 +15,6 @@ import ljy.bluetooth.BuildConfig;
 import ljy.utils.MyLog;
 
 
-/**
- * Created by  Huanglinqing on 2018/8/24/024.
- * APPlication 类
- * 初始化something
- */
-
 public class APP extends Application {
     private final String TAG = "APP";
     //不管是蓝牙连接方还是服务器方，得到socket对象后都传入
@@ -45,7 +39,7 @@ public class APP extends Application {
         Logger.addLogAdapter(new DiskLogAdapter(){
             @Override
             public boolean isLoggable(int priority, @Nullable String tag) {
-                return true;
+                return false;
             }
         });
         MyLog.i(TAG, "app on create!");

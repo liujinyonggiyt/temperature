@@ -26,7 +26,6 @@ import ljy.base.constant.BltContant;
 import ljy.utils.MyLog;
 
 /**
- * Created by Huanglinqing on 2018/8/25.  项目中用  demo不使用
  * 蓝牙对象管理器
  * 蓝牙4.0 必须在api18 android4.3以上才能运行
  */

@@ -12,18 +12,20 @@ import java.io.InputStreamReader;
 
 import ljy.APP;
 import ljy.base.bean.MessageBean;
+import ljy.utils.MyLog;
 
 /**
- * Created by Huanglinqing on 2018/8/25/025 20:54
- * E-Mail Address：1306214077@qq.com
  * 接收消息服务端
  *
  */
 public class ReceiveSocketService {
-
+    public static final String TAG = "ReceiveSocketService";
     public static final int RECEIVER_MESSAGE =  21;//收到消息
     public static final int RECEIVER_FILE =  22;//收到文件
 
+    /**
+     * 会阻塞，放到其他线程
+     */
     public  void  receiveMessage(){
           if (APP.bluetoothSocket == null){
               return;
@@ -64,7 +66,7 @@ public class ReceiveSocketService {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            MyLog.e(TAG, e.getMessage(), e);
         }
 
     }
