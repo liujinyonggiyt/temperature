@@ -5,6 +5,12 @@ import com.ljy.misc.AsynchronizedEventHandler;
 import com.ljy.misc.EventConsumer;
 import com.ljy.misc.LogicEvent;
 import com.ljy.misc.LogicEventType;
+import com.ljy.misc.msg.ClientRequest;
+import com.ljy.misc.msg.SystemTimeMrg;
+import com.ljy.misc.session.ClientSession;
+import com.ljy.misc.utils.AnyUtils;
+import com.ljy.mrg.ClientProtoHandlerMrg;
+import com.ljy.mrg.ClientSessionMrg;
 import com.ljy.mrg.TimerMrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,17 +27,30 @@ public class World extends EventConsumer<LogicEvent> {
     private static final Logger logger = LoggerFactory.getLogger(World.class);
 
     private final TimerMrg timerMrg;
+    private final ClientProtoHandlerMrg clientProtoHandlerMrg;
+    private final ClientSessionMrg clientSessionMrg;
+    private final SystemTimeMrg systemTimeMrg;
+
     protected final Map<LogicEventType,AsynchronizedEventHandler> logicEventMrg = new EnumMap<>(
             LogicEventType.class);
     @Inject
-    public World(TimerMrg timerMrg) {
+    public World(TimerMrg timerMrg, ClientProtoHandlerMrg clientProtoHandlerMrg, ClientSessionMrg clientSessionMrg, SystemTimeMrg systemTimeMrg) {
         this.timerMrg = timerMrg;
+        this.clientProtoHandlerMrg = clientProtoHandlerMrg;
+        this.clientSessionMrg = clientSessionMrg;
+        this.systemTimeMrg = systemTimeMrg;
     }
 
     protected void initWhenThreadStart() throws Exception {
         logicEventMrg.put(LogicEventType.LOGIC_CLIENT_REGISTING, this::AS_on_client_register);
         logicEventMrg.put(LogicEventType.LOGIC_CLIENT_DISCONNECT,this::AS_on_client_disconnect);
         logicEventMrg.put(LogicEventType.LOGIC_CLIENT_PROTO_COMMING_EVENT,this::AS_on_client_proto_come);
+
+        registProtoHandlers();
+    }
+
+    private void registProtoHandlers(){
+
     }
 
     /**
@@ -40,11 +59,8 @@ public class World extends EventConsumer<LogicEvent> {
      * @param data
      */
     public final void AS_on_client_register(LogicEvent data) throws Exception {
-
-        ClientTempSession clientTempSession = new ClientTempSession(
-                data.getChannel(), sysTimeMrg.getSysSecTime());
-
-        clientSessionMrg.addTempSession(clientTempSession);
+        ClientSession clientSession = new ClientSession(data.getChannel(), systemTimeMrg.getSysSecTime());
+        clientSessionMrg.addSession(clientSession);
 
     }
 
@@ -55,30 +71,33 @@ public class World extends EventConsumer<LogicEvent> {
      */
     public void AS_on_client_disconnect(LogicEvent logicEvent) throws Exception {
         try {
-            ClientTempSession clientTempSession = clientSessionMrg
-                    .removeTempSession(logicEvent.getChannel());
-            if (null != clientTempSession) {
-                return;
-            }
-            ClientSession clientSession = clientSessionMrg
-                    .getSessionByChannel(logicEvent.getChannel());
+            ClientSession clientSession = clientSessionMrg.getSessionByChannel(logicEvent.getChannel());
             if (null == clientSession) {
                 return;
             }
-            //这里一定不能执行这一条代码,要不然在session管理器中有一个Map<channel,clientsession> key对象永久丢失内存泄露
-            //clientSession.setChannel(null);
-            sceneMrg.notifySMPlayerOffline(clientSession.getPlayer().getGuid(), clientSession.getPlayer().getSmServerSession(),"socket close");
+           clientSessionMrg.removeSession(logicEvent.getChannel());
+
+            //TODO
         } finally {
             AnyUtils.closeQuietly(logicEvent.getChannel());
         }
     }
 
     public final void AS_on_client_proto_come(LogicEvent data) throws Throwable {
-        sceneProtoHandlerMrg.handleClientProto(data.getProtoEnum(),
-                data.getChannel(), data.getProto());
+        ClientRequest clientRequest = (ClientRequest) data.getParamA();
+        ProtoEnum protoEnum = ProtoEnum.values()[clientRequest.getMsgCode()];//索引
+        clientProtoHandlerMrg.handleClientProto(protoEnum,
+                data.getChannel(), clientRequest);
     }
 
     public void loop() {
+        //刷新游戏时间戳
+        int escapedMillTime = systemTimeMrg.update();
+        //还未到每一帧的毫秒时间，直接return不刷帧更新
+        if (0 == escapedMillTime) {
+            return;
+        }
+
         timerMrg.tickTrigger();
     }
 
