@@ -13,10 +13,12 @@ public class SendMrg {
 
     private static final Logger logger = LoggerFactory.getLogger(SendMrg.class);
     private final ChannelWriteMrg channelWriteMrg;
+    private final ClientSessionMrg clientSessionMrg;
 
     @Inject
-    public SendMrg(ChannelWriteMrg channelWriteMrg) {
+    public SendMrg(ChannelWriteMrg channelWriteMrg, ClientSessionMrg clientSessionMrg) {
         this.channelWriteMrg = channelWriteMrg;
+        this.clientSessionMrg = clientSessionMrg;
     }
 
     /**
@@ -41,6 +43,12 @@ public class SendMrg {
     public void sendToClientForAAAAAAAA(Channel clientChannel, Object proto) {
         if (null != clientChannel) {
             channelWriteMrg.writeAndFlush(clientChannel, proto);
+        }
+    }
+
+    public void broadcastMsg(Object proto){
+        for(ClientSession clientSession:clientSessionMrg.getChannelAndClientSession().values()){
+            sendToClientForAAAAAAAA(clientSession, proto);
         }
     }
 

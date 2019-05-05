@@ -33,7 +33,6 @@ public abstract class BaseActivity extends Activity {
         try{
             setContentView(getLayoutId());
             ButterKnife.bind(this);
-            EventBus.getDefault().register(this);
             mActivity = this;
 
             boolean isImmersive = false;
@@ -66,7 +65,6 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     public static boolean hasKitKat() {

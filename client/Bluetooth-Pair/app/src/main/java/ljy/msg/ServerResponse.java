@@ -1,22 +1,13 @@
-package com.ljy.misc.msg;
-
-import com.ljy.ProtoEnum;
-import io.netty.buffer.ByteBuf;
+package ljy.msg;
 
 import java.io.IOException;
 
-/**
- * 服务端发给客户端的消息。 所有返回给客户端的消息都最好继承于它.<br>
- * 这里封装了基本的输出字节操作。
- * 
- * @author spring wutao liuhengli modify
- * 
- */
+import io.netty.buffer.ByteBuf;
 public class ServerResponse implements ResponseMsg {
 	private DataIOUtil output = DataIOUtil.newInstance4Out();
 	private int msgCode;
 
-	public ServerResponse(ProtoEnum protoEnum) {
+	public ServerResponse(com.ljy.ProtoEnum protoEnum) {
 		msgCode = protoEnum.ordinal();
 	}
 

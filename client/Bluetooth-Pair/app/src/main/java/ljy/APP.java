@@ -33,7 +33,7 @@ public class APP extends Application {
         Logger.addLogAdapter(new AndroidLogAdapter(){
             @Override
             public boolean isLoggable(int priority, @Nullable String tag) {
-                return true;
+                return false;
             }
         });
         Logger.addLogAdapter(new DiskLogAdapter(){
@@ -43,7 +43,7 @@ public class APP extends Application {
             }
         });
         MyLog.i(TAG, "app on create!");
-        MyLog.i(TAG, Environment.getExternalStorageState());
+//        MyLog.i(TAG, Environment.getExternalStorageState());
     }
 
 

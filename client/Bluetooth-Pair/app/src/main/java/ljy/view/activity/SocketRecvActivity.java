@@ -1,26 +1,35 @@
 package ljy.view.activity;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import com.ljy.ProtoEnum;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import ljy.base.activity.BaseActivity;
-import ljy.base.bean.BlueMessageBean;
 import ljy.base.bean.SocketMessageBean;
-import ljy.base.constant.BltContant;
 import ljy.bluetooth.R;
-import ljy.net.SocketConnect;
-import ljy.service.ReceiveSocketService;
+import ljy.msg.RequestMsg;
+import ljy.msg.ServerResponse;
+import ljy.net.AbsConnectServer;
+import ljy.net.NettyConnectServer;
 import ljy.utils.MyLog;
-import ljy.utils.ToastUtil;
 import ljy.widget.TitleBar;
 
 import static ljy.base.bean.SocketMessageBean.ON_RECEIVE_MSG;
@@ -37,16 +46,38 @@ public class SocketRecvActivity extends BaseActivity {
     @BindView(R.id.buttion_connet_server)
     Button connect;
     @BindView(R.id.connectStat)
-    Text connectState;
+    TextView connectState;
+
+    @BindView(R.id.tosend_edit_text)
+    EditText tosend_edit_text;
+    @BindView(R.id.text_send_btn)
+    Button sendMsg;
+
+    @BindView(R.id.listview)
+    ListView msgReceive;
+    private ArrayAdapter adapter;
+    private List<Map<String, String>> list;
+
+    /**
+     * 服务器连接
+     */
+    private AbsConnectServer connectServer = new NettyConnectServer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_socket_recv;
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        connectServer.disconnect();
     }
 
     /**
@@ -54,18 +85,30 @@ public class SocketRecvActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_connet_server})
+    @OnClick({R.id.buttion_connet_server, R.id.text_send_btn})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
-                case R.id.buttion_connet_server:{
+                case R.id.buttion_connet_server:{//连接服务器
                     String ip = ip_editText.getText().toString();
                     int port = Integer.parseInt(port_editText.getText().toString());
+
+//                    if(!connectServer.isNeedReconnect(ip, port)){
+//                        return;
+//                    }
                     //连接服务器
-                    new SocketConnect(ip, port, new SocketConnect.Callback() {
+                    this.connectServer.connect(ip, port, new AbsConnectServer.Callback() {
                         @Override
                         public void onConnected() {
                             EventBus.getDefault().post(new SocketMessageBean(SOCKET_CONNECTED));
+
+                            //测试消息
+                            {
+                                ServerResponse serverResponse = new ServerResponse(ProtoEnum.C_TEST);
+
+//                                connectServer.sendMsg(serverResponse);
+                            }
+
                         }
 
                         @Override
@@ -84,8 +127,8 @@ public class SocketRecvActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onReceived(byte[] msg) {
-                            EventBus.getDefault().post(new SocketMessageBean(ON_RECEIVE_MSG, new String(msg)));
+                        public void onReceived(RequestMsg msg) {
+                            EventBus.getDefault().post(new SocketMessageBean(ON_RECEIVE_MSG, msg));
                         }
 
                         @Override
@@ -95,6 +138,13 @@ public class SocketRecvActivity extends BaseActivity {
                     });
                     break;
                 }
+                case R.id.text_send_btn:{//发送消息
+                    ServerResponse serverResponse = new ServerResponse(ProtoEnum.C_SEND_STRING);
+                    serverResponse.writeUTF(tosend_edit_text.getText().toString());
+                    connectServer.sendMsg(serverResponse);
+                    break;
+                }
+                default:break;
             }
         }catch (Exception e){
             MyLog.e(Tag, e.getMessage(), e);
@@ -102,19 +152,30 @@ public class SocketRecvActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(SocketMessageBean socketMessageBean) {
+    public void onMessageEvent(SocketMessageBean socketMessageBean) throws IOException {
         switch (socketMessageBean.getId()) {
             case SocketMessageBean.SOCKET_CONNECTED:
-                connectState.setData("conneted");
+                connectState.setText("conneted");
                 break;
             case SocketMessageBean.SOCKET_DISCONNECTED:
-                connectState.setData("disconneted");
+                connectState.setText("disconneted");
                 break;
             case SocketMessageBean.ON_RECEIVE_MSG:{
-                String msg = socketMessageBean.getContent();
-                MyLog.i(Tag, msg);
+                RequestMsg requestMsg = socketMessageBean.getMsg();
+                String msg = requestMsg.getString();
+//                MyLog.i(Tag, "msg:"+requestMsg.getMsgCode()+"-"+msg);
+                msgReceive.append(msg+"\n");
+
+                list.add(map);
+                if(null == adapter){
+                    adapter = new ArrayAdapter(SocketRecvActivity.this, list, R.layout.devices,
+                            new String[]{"deviceName", "statue"}, new int[]{R.id.devicename, R.id.statue});
+                    listview.setAdapter(adapter);
+                }else {
+                    adapter.notifyDataSetChanged();
+                }
                 break;
-            }
+        }
             default:
                 break;
         }

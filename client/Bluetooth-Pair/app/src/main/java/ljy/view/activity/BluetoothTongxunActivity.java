@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -45,17 +46,22 @@ public class BluetoothTongxunActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        titlebar.setTitle(getIntent().getStringExtra("devicename"));
-        titlebar.setBackgroundResource(R.color.blue);
-        titlebar.setImmersive(true);
-        titlebar.setTitleColor(Color.WHITE);
-        //开启消息接收端
-        ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
-            @Override
-            public void run() {
-                new ReceiveSocketService().receiveMessage();
-            }
-        });
+        try{
+            EventBus.getDefault().register(this);
+            titlebar.setTitle(getIntent().getStringExtra("devicename"));
+            titlebar.setBackgroundResource(R.color.blue);
+            titlebar.setImmersive(true);
+            titlebar.setTitleColor(Color.WHITE);
+            //开启消息接收端
+            ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
+                @Override
+                public void run() {
+                    new ReceiveSocketService().receiveMessage();
+                }
+            });
+        }catch (Exception e){
+            MyLog.e(Tag, e.getMessage(), e);
+        }
     }
 
     @Override
@@ -79,6 +85,12 @@ public class BluetoothTongxunActivity extends BaseActivity {
                 SendSocketService.sendMessageByFile(Environment.getExternalStorageDirectory()+"/test.png");
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**

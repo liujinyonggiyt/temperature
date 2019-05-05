@@ -1,18 +1,16 @@
-package com.ljy.misc.net;
+package ljy.net;
 
-import com.ljy.misc.msg.ServerResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ljy.msg.ServerResponse;
+import ljy.utils.MyLog;
 
 public class SocketEncoder extends ChannelOutboundHandlerAdapter
 {
-	private static final Logger logger = LoggerFactory
-			.getLogger(SocketEncoder.class);
+	private static final String TAG = "SocketEncoder";
 
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg,
@@ -28,13 +26,13 @@ public class SocketEncoder extends ChannelOutboundHandlerAdapter
 			}
 			else
 			{
-				logger.error("error: send proto class type error :"
+				MyLog.e(TAG,"error: send proto class type error :"
 						+ msg.getClass().getSimpleName());
 			}
 		}
 		catch(Exception e)
 		{
-			logger.error("",e);
+			MyLog.e(TAG,e.getMessage(), e);
 		}
 
 	}
@@ -50,7 +48,7 @@ public class SocketEncoder extends ChannelOutboundHandlerAdapter
 		byteBuf = ctx.alloc().buffer(finalProtoLen,finalProtoLen);
 
 		// 将协议的长度写入进来
-		byteBuf.writeInt(body.length + 4);
+		byteBuf.writeInt(body.length+4);
 		byteBuf.writeInt(serverResponse.getMsgCode());
 		byteBuf.writeBytes(body);
 		try(ByteBufOutputStream out = new ByteBufOutputStream(byteBuf))
@@ -72,6 +70,5 @@ public class SocketEncoder extends ChannelOutboundHandlerAdapter
 	{
 		// 走到这里的原因有多种
 		ctx.channel().close();
-		logger.debug("my be remove peer close process manully");
 	}
 }

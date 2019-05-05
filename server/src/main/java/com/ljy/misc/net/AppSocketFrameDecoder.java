@@ -55,7 +55,10 @@ public abstract class AppSocketFrameDecoder extends
 
 		try
 		{
-			RequestMsg clientRequest = new ClientRequest(rtBuf.array());
+			byte[] bytes = new byte[rtBuf.readableBytes()];
+			rtBuf.readBytes(bytes);
+
+			RequestMsg clientRequest = new ClientRequest(bytes);
 			long sequence = logicQueue.next();
 			try
 			{

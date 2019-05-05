@@ -120,7 +120,7 @@ public class SocketConnect {
 
                 isConnected = true;
                 callback.onConnected();
-                MyLog.e(TAG, "onConnected");
+                MyLog.i(TAG, "onConnected");
 
                 //创建监听线程
                 openThread();
@@ -179,13 +179,12 @@ public class SocketConnect {
 
                 //调用回调
                 callback.onDisconnected();
-                MyLog.e(TAG, "onDisconnected");
+                MyLog.i(TAG, "onDisconnected");
             }
 
 
         } catch (Exception e) {
             // TODO: handle exception
-            e.printStackTrace();
             callback.onError("断开连接异常");
             MyLog.e(TAG, "onError");
         }
@@ -199,7 +198,7 @@ public class SocketConnect {
             isConnected = false;
             mThread.interrupt();
             mThread = null;
-            MyLog.e(TAG, "close thread");
+            MyLog.i(TAG, "close thread");
         }
     }
 
@@ -209,7 +208,7 @@ public class SocketConnect {
             isAutoConnect = false;
             watchThread.interrupt();
             watchThread = null;
-            MyLog.e(TAG, "close watchThread");
+            MyLog.i(TAG, "close watchThread");
         }
     }
 
@@ -231,15 +230,13 @@ public class SocketConnect {
                             System.arraycopy(buffer, 0, data, 0, readLen);
 
                             callback.onReceived(data);
-                            MyLog.e(TAG, "onReceived"+":"+new String(data));
+                            MyLog.i(TAG, "onReceived"+":"+new String(data));
 
 
                             lasttime = System.currentTimeMillis();
                         }
 
                     } catch (Exception e) {
-                        // TODO: handle exception
-                        e.printStackTrace();
                         callback.onError("读取数据异常");
                         MyLog.e(TAG, "onError");
                     }
@@ -283,7 +280,7 @@ public class SocketConnect {
 
                         }else {
                             //未连接的情况下，重新连接服务器
-                            MyLog.e(TAG, "onReconnect");
+                            MyLog.i(TAG, "onReconnect");
                             callback.onReconnected();
                             _disconnect();
                             _connect();
@@ -352,5 +349,13 @@ public class SocketConnect {
             MyLog.e(TAG, "sendHeart fail");
             isConnected = false;
         }
+    }
+
+    public Boolean getAutoConnect() {
+        return isAutoConnect;
+    }
+
+    public void setAutoConnect(Boolean autoConnect) {
+        isAutoConnect = autoConnect;
     }
 }

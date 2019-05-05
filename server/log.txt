@@ -11,3 +11,167 @@
 [2019-04-30 17:39:25 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
 [2019-04-30 17:39:25 INFO][com.ljy.misc.EventConsumer]logic thread starting
 [2019-04-30 17:39:25 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 10:34:48 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 10:34:48 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 10:34:48 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 10:35:57 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 10:35:57 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 10:35:57 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 15:24:39 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 15:24:39 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 15:24:39 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 15:39:40 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 15:39:40 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 15:39:40 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 15:46:13 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 15:46:13 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 15:46:13 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 15:48:31 INFO][com.ljy.World]鏂扮殑瀹㈡埛绔繛鎺ワ細com.ljy.misc.session.ClientSession@35e19f16
+[2019-05-05 15:48:47 INFO][com.ljy.World]瀹㈡埛绔柇寮�杩炴帴锛�com.ljy.misc.session.ClientSession@35e19f16
+[2019-05-05 15:51:57 INFO][com.ljy.World]鏂扮殑瀹㈡埛绔繛鎺ワ細com.ljy.misc.session.ClientSession@793cd7d6
+[2019-05-05 15:52:04 INFO][com.ljy.World]瀹㈡埛绔柇寮�杩炴帴锛�com.ljy.misc.session.ClientSession@793cd7d6
+[2019-05-05 15:55:24 INFO][com.ljy.World]new client锛�com.ljy.misc.session.ClientSession@435be573
+[2019-05-05 15:55:30 INFO][com.ljy.World]client disconnect锛�com.ljy.misc.session.ClientSession@435be573
+[2019-05-05 15:58:29 INFO][com.ljy.World]new client锛�com.ljy.misc.session.ClientSession@2ba3ccb
+[2019-05-05 16:02:33 INFO][com.ljy.World]client disconnect锛�com.ljy.misc.session.ClientSession@2ba3ccb
+[2019-05-05 16:02:55 INFO][com.ljy.World]new client锛�com.ljy.misc.session.ClientSession@76c14b9a
+[2019-05-05 16:05:01 INFO][com.ljy.World]client disconnect锛�com.ljy.misc.session.ClientSession@76c14b9a
+[2019-05-05 16:06:13 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@34be31be
+[2019-05-05 16:10:55 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@34be31be
+[2019-05-05 16:11:09 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@46dd6b5b
+[2019-05-05 16:13:20 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@46dd6b5b
+[2019-05-05 16:15:07 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@2f826d3d
+[2019-05-05 16:15:28 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@2f826d3d
+[2019-05-05 16:16:11 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 16:16:11 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 16:16:11 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 16:17:51 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 16:17:51 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 16:17:51 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 16:18:36 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@195813af
+[2019-05-05 16:26:06 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@195813af
+[2019-05-05 16:26:42 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@31b10b05
+[2019-05-05 16:28:46 ERROR][com.ljy.misc.net.AppSocketFrameDecoder]
+java.lang.UnsupportedOperationException: direct buffer
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.array(PooledUnsafeDirectByteBuf.java:343)
+	at io.netty.buffer.AbstractUnpooledSlicedByteBuf.array(AbstractUnpooledSlicedByteBuf.java:99)
+	at com.ljy.misc.net.AppSocketFrameDecoder.extractFrame(AppSocketFrameDecoder.java:58)
+	at io.netty.handler.codec.LengthFieldBasedFrameDecoder.decode(LengthFieldBasedFrameDecoder.java:439)
+	at io.netty.handler.codec.LengthFieldBasedFrameDecoder.decode(LengthFieldBasedFrameDecoder.java:334)
+	at io.netty.handler.codec.ByteToMessageDecoder.decodeRemovalReentryProtection(ByteToMessageDecoder.java:502)
+	at io.netty.handler.codec.ByteToMessageDecoder.callDecode(ByteToMessageDecoder.java:441)
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:278)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:374)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:360)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:352)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1408)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:374)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:360)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:930)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:163)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:682)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:617)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:534)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:496)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:906)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.lang.Thread.run(Thread.java:745)
+[2019-05-05 16:33:14 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@31b10b05
+[2019-05-05 16:33:20 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 16:33:20 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 16:33:20 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 16:33:45 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@dd1aff0
+[2019-05-05 16:34:16 INFO][com.ljy.World]receive client string msg锛�a
+[2019-05-05 16:36:34 ERROR][com.ljy.misc.EventConsumer]
+java.lang.ArrayIndexOutOfBoundsException: 90368
+	at com.ljy.World.AS_on_client_proto_come(World.java:125)
+	at com.ljy.World$$Lambda$8/1543636742.onEvent(Unknown Source)
+	at com.ljy.World.onEvent(World.java:154)
+	at com.ljy.World.onEvent(World.java:27)
+	at com.ljy.misc.EventConsumer.onEventTemplate(EventConsumer.java:82)
+	at com.ljy.misc.GlobalQueue$$Lambda$5/2049051802.onEvent(Unknown Source)
+	at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:128)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[2019-05-05 16:37:46 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@dd1aff0
+[2019-05-05 16:37:46 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@4107aefe
+[2019-05-05 16:38:10 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@32ee32f4
+[2019-05-05 16:38:15 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@4107aefe
+[2019-05-05 16:38:37 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@32ee32f4
+[2019-05-05 16:38:52 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@60ae0dc0
+[2019-05-05 16:39:12 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 16:39:17 ERROR][com.ljy.misc.EventConsumer]
+java.lang.ArrayIndexOutOfBoundsException: 90368
+	at com.ljy.World.AS_on_client_proto_come(World.java:125)
+	at com.ljy.World$$Lambda$8/1543636742.onEvent(Unknown Source)
+	at com.ljy.World.onEvent(World.java:154)
+	at com.ljy.World.onEvent(World.java:27)
+	at com.ljy.misc.EventConsumer.onEventTemplate(EventConsumer.java:82)
+	at com.ljy.misc.GlobalQueue$$Lambda$5/2049051802.onEvent(Unknown Source)
+	at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:128)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[2019-05-05 16:40:20 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@60ae0dc0
+[2019-05-05 16:40:57 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@6b213b7
+[2019-05-05 16:41:39 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 16:43:00 ERROR][com.ljy.misc.EventConsumer]
+java.lang.ArrayIndexOutOfBoundsException: 90368
+	at com.ljy.World.AS_on_client_proto_come(World.java:125)
+	at com.ljy.World$$Lambda$8/1543636742.onEvent(Unknown Source)
+	at com.ljy.World.onEvent(World.java:154)
+	at com.ljy.World.onEvent(World.java:27)
+	at com.ljy.misc.EventConsumer.onEventTemplate(EventConsumer.java:82)
+	at com.ljy.misc.GlobalQueue$$Lambda$5/2049051802.onEvent(Unknown Source)
+	at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:128)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[2019-05-05 16:51:33 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@6b213b7
+[2019-05-05 16:51:51 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@485ef9f2
+[2019-05-05 17:00:42 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 17:00:42 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 17:00:42 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 17:01:10 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@7aae67dd
+[2019-05-05 17:01:43 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:04:48 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@7aae67dd
+[2019-05-05 17:04:57 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 17:04:57 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 17:04:57 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 17:05:20 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@35e19f16
+[2019-05-05 17:05:31 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:05:34 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:05:35 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:05:35 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:05:35 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:05:35 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:05:35 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:05:42 INFO][com.ljy.World]receive client string msg:ab
+[2019-05-05 17:05:43 INFO][com.ljy.World]receive client string msg:ab
+[2019-05-05 17:05:47 INFO][com.ljy.World]receive client string msg:ab
+[2019-05-05 17:06:24 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 17:06:24 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 17:06:24 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 17:06:28 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@5b734b62
+[2019-05-05 17:09:58 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@5b734b62
+[2019-05-05 17:10:28 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@4530985a
+[2019-05-05 17:12:17 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@4530985a
+[2019-05-05 17:13:16 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@36d74c5b
+[2019-05-05 17:13:42 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:14:33 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:15:07 INFO][com.ljy.World]receive client string msg:a
+[2019-05-05 17:15:54 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@36d74c5b
+[2019-05-05 17:16:26 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 17:16:27 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 17:16:27 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 17:17:00 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@3377969d
+[2019-05-05 17:17:14 INFO][com.ljy.World]receive client string msg:y
+[2019-05-05 17:17:19 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@3377969d
+[2019-05-05 17:17:39 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@42cf205d
+[2019-05-05 17:17:45 INFO][com.ljy.World]receive client string msg:d
+[2019-05-05 17:21:38 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@58ab591f
+[2019-05-05 17:21:55 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@58ab591f
+[2019-05-05 17:28:55 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@42cf205d
+[2019-05-05 17:29:47 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@737a12e9
+[2019-05-05 17:34:25 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@737a12e9

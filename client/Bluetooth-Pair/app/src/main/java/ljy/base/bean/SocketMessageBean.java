@@ -1,5 +1,7 @@
 package ljy.base.bean;
 
+import ljy.msg.RequestMsg;
+
 /**
  * 发送消息 Eventbus对应的实体类
  */
@@ -8,32 +10,22 @@ public class SocketMessageBean {
     public static final int SOCKET_DISCONNECTED = 2;
     public static final int ON_RECEIVE_MSG = 3;
     private int id;
-    private String content;
+    private RequestMsg msg;
 
     public SocketMessageBean(int id) {
         this.id = id;
     }
 
-    public SocketMessageBean(int id, String content) {
+    public SocketMessageBean(int id, RequestMsg serverRequest) {
         this.id = id;
-        this.content = content;
+        this.msg = serverRequest;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public RequestMsg getMsg() {
+        return msg;
     }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-
 }

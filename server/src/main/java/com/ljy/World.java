@@ -9,11 +9,13 @@ import com.ljy.misc.msg.ClientRequest;
 import com.ljy.misc.msg.ServerResponse;
 import com.ljy.misc.msg.SystemTimeMrg;
 import com.ljy.misc.session.ClientSession;
+import com.ljy.misc.trigger.Timer;
 import com.ljy.misc.utils.AnyUtils;
 import com.ljy.mrg.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -54,14 +56,31 @@ public class World extends EventConsumer<LogicEvent> {
 
     private void registProtoHandlers(){
         clientProtoHandlerMrg.registerClient(ProtoEnum.C_TEST, this::C_TEST_handler);
+        clientProtoHandlerMrg.registerClient(ProtoEnum.C_PING, this::C_PING_handler);
+        clientProtoHandlerMrg.registerClient(ProtoEnum.C_SEND_STRING, this::C_SEND_STRING_handler);
     }
 
     private boolean C_TEST_handler(ClientSession clientSession, ClientRequest clientRequest)throws Exception{
         String msg = clientRequest.getString();
-        logger.info("收到客户端消息："+msg);
+        logger.info("receive client test msg："+msg);
         ServerResponse response = new ServerResponse(ProtoEnum.S_TEST_RESULT);
         response.writeUTF("server receive msg:"+msg);
         sendMrg.sendToClientForAAAAAAAA(clientSession.getChannel(), response);
+        return true;
+    }
+    private boolean C_PING_handler(ClientSession clientSession, ClientRequest clientRequest)throws Exception{
+        String msg = clientRequest.getString();
+        logger.info("receive client ping msg："+msg);
+        ServerResponse response = new ServerResponse(ProtoEnum.S_PING_RESULT);
+        sendMrg.sendToClientForAAAAAAAA(clientSession.getChannel(), response);
+        return true;
+    }
+    private boolean C_SEND_STRING_handler(ClientSession clientSession, ClientRequest clientRequest)throws Exception{
+        String msg = clientRequest.getString();
+//        logger.info("receive client string msg:"+msg);
+        ServerResponse serverResponse = new ServerResponse(ProtoEnum.S_SEND_STRING);
+        serverResponse.writeUTF("receive client string msg:"+msg);
+        sendMrg.broadcastMsg(serverResponse);
         return true;
     }
 
@@ -73,6 +92,7 @@ public class World extends EventConsumer<LogicEvent> {
     public final void AS_on_client_register(LogicEvent data) throws Exception {
         ClientSession clientSession = new ClientSession(data.getChannel(), systemTimeMrg.getSysSecTime());
         clientSessionMrg.addSession(clientSession);
+        logger.info("new client:"+clientSession);
 
     }
 
@@ -87,6 +107,7 @@ public class World extends EventConsumer<LogicEvent> {
             if (null == clientSession) {
                 return;
             }
+            logger.info("client disconnect:"+clientSession);
            clientSessionMrg.removeSession(logicEvent.getChannel());
 
             //TODO

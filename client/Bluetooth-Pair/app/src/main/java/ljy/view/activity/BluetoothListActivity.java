@@ -86,6 +86,7 @@ public class BluetoothListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
+            EventBus.getDefault().register(this);
             registerReceiver(blueToothReceiver, blueToothReceiver.makeFilter());
             BltManager.getInstance().initBltManager(this);
             init();
