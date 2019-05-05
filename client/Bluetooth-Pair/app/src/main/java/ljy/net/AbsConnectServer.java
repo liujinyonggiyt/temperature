@@ -55,6 +55,7 @@ public abstract class AbsConnectServer {
 
     public abstract void sendMsg(ServerResponse serverResponse);
 
+    public abstract boolean isActive();
     public void setState(State state){
         MyLog.i(TAG, "oldstate:"+this.state+",newstate:"+state);
         this.state = state;

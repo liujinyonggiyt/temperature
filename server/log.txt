@@ -175,3 +175,14 @@ java.lang.ArrayIndexOutOfBoundsException: 90368
 [2019-05-05 17:28:55 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@42cf205d
 [2019-05-05 17:29:47 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@737a12e9
 [2019-05-05 17:34:25 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@737a12e9
+[2019-05-05 17:58:24 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-05-05 17:58:24 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-05-05 17:58:24 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-05-05 18:00:12 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@7b6edb85
+[2019-05-05 18:12:19 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@7b6edb85
+[2019-05-05 18:12:53 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@7aac2f5
+[2019-05-05 18:13:43 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@7aac2f5
+[2019-05-05 18:14:08 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@17757a0b
+[2019-05-05 18:17:41 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@17757a0b
+[2019-05-05 18:18:18 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@17d9f8d5
+[2019-05-05 18:20:22 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@17d9f8d5

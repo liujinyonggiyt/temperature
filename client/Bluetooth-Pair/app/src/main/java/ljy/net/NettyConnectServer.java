@@ -110,4 +110,9 @@ public class NettyConnectServer extends AbsConnectServer {
             socketChannel.writeAndFlush(serverResponse);
         }
     }
+
+    @Override
+    public boolean isActive() {
+        return null!=socketChannel && socketChannel.isActive();
+    }
 }

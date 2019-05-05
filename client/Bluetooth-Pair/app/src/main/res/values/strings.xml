@@ -7,4 +7,8 @@
     <string name="qingshurufasongdexinxi">请输入发送的信息</string>
     <string name="ceshishebei">测试设备</string>
     <string name="connect_server">连接服务器</string>
+    <string name="input_ip">请输入服务器ip</string>
+    <string name="input_port">请输入服务器端口</string>
+    <string name="input_send_server">请填写将要发送的服务器消息</string>
+    <string name="btn_send">发送</string>
 </resources>

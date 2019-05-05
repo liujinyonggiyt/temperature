@@ -1,5 +1,6 @@
 package ljy.view.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ljy.ProtoEnum;
 
@@ -17,6 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +59,7 @@ public class SocketRecvActivity extends BaseActivity {
     @BindView(R.id.listview)
     ListView msgReceive;
     private ArrayAdapter adapter;
-    private List<Map<String, String>> list;
+    private LinkedList<String> msgList = new LinkedList<>();
 
     /**
      * 服务器连接
@@ -67,6 +70,10 @@ public class SocketRecvActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        titlebar.setTitle("网络通信");
+        titlebar.setBackgroundResource(R.color.blue);
+        titlebar.setImmersive(true);
+        titlebar.setTitleColor(Color.WHITE);
     }
 
     @Override
@@ -139,6 +146,10 @@ public class SocketRecvActivity extends BaseActivity {
                     break;
                 }
                 case R.id.text_send_btn:{//发送消息
+                    if(!connectServer.isActive()){
+                        Toast.makeText(SocketRecvActivity.this, "请先连接服务器！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     ServerResponse serverResponse = new ServerResponse(ProtoEnum.C_SEND_STRING);
                     serverResponse.writeUTF(tosend_edit_text.getText().toString());
                     connectServer.sendMsg(serverResponse);
@@ -155,27 +166,28 @@ public class SocketRecvActivity extends BaseActivity {
     public void onMessageEvent(SocketMessageBean socketMessageBean) throws IOException {
         switch (socketMessageBean.getId()) {
             case SocketMessageBean.SOCKET_CONNECTED:
-                connectState.setText("conneted");
+                connectState.setText("服务器连接状态:已连接");
                 break;
             case SocketMessageBean.SOCKET_DISCONNECTED:
-                connectState.setText("disconneted");
+                connectState.setText("服务器连接状态:未连接");
                 break;
             case SocketMessageBean.ON_RECEIVE_MSG:{
                 RequestMsg requestMsg = socketMessageBean.getMsg();
                 String msg = requestMsg.getString();
 //                MyLog.i(Tag, "msg:"+requestMsg.getMsgCode()+"-"+msg);
-                msgReceive.append(msg+"\n");
 
-                list.add(map);
+                msgList.addLast(msg+"\n");
+                if(msgList.size()>20){
+                    msgList.removeFirst();
+                }
                 if(null == adapter){
-                    adapter = new ArrayAdapter(SocketRecvActivity.this, list, R.layout.devices,
-                            new String[]{"deviceName", "statue"}, new int[]{R.id.devicename, R.id.statue});
-                    listview.setAdapter(adapter);
+                    adapter = new ArrayAdapter(SocketRecvActivity.this, android.R.layout.simple_list_item_1, msgList);
+                    msgReceive.setAdapter(adapter);
                 }else {
                     adapter.notifyDataSetChanged();
                 }
                 break;
-        }
+            }
             default:
                 break;
         }

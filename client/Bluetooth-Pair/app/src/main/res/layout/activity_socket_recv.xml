@@ -20,11 +20,13 @@
             android:id="@+id/socket_ip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/input_ip"
             />
         <EditText
             android:id="@+id/socket_port"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/input_port"
             />
         <Button
             android:id="@+id/buttion_connet_server"
@@ -38,25 +40,6 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:id="@+id/content_ly"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </ScrollView>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,12 +49,23 @@
             android:id="@+id/tosend_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/input_send_server"
             />
 
         <Button
             android:id="@+id/text_send_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="发送文字" />
+            android:text="@string/btn_send" />
+
+        <TextView
+            android:text="收到的服务器消息列表："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
     </LinearLayout>
 </LinearLayout>
