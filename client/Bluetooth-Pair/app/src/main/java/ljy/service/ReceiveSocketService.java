@@ -31,8 +31,7 @@ public class ReceiveSocketService {
      * @param num:要获取二进制值的数
      * @param index:倒数第一位为0，依次类推
      */
-    public static int get(int num, int index)
-    {
+    public static int get(int num, int index){
         return (num & (0x1 << index)) >> index;
     }
     public static void main(String[] args){
