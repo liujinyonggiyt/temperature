@@ -26,6 +26,7 @@ public class ReceiveSocketService {
 
     private static final byte BEGIN_BIT = 0;//起始位
     private static final byte END_BIT = 1-BEGIN_BIT;//停止位
+    private State state = new WaitDataState();
     /**
      * @param num:要获取二进制值的数
      * @param index:倒数第一位为0，依次类推
@@ -50,10 +51,63 @@ public class ReceiveSocketService {
         System.out.println();
         System.out.println(Arrays.toString(data));
     }
+
+
+    private static abstract class State{
+        public void onExit(){}
+        public abstract void onReceiveBit(int bit);
+    }
+
+
+    private class WaitDataState extends State{
+
+        @Override
+        public void onReceiveBit(int bit) {
+            if(BEGIN_BIT == bit){
+                changeState(new DataState());
+            }
+        }
+    }
+
+    private class DataState extends State{
+        byte[] data = new byte[8];
+        int dataIndex = 0;
+
+        @Override
+        public void onReceiveBit(int bit) {
+            data[dataIndex] = (byte) bit;
+            dataIndex++;
+            if(dataIndex == data.length){
+                changeState(new EndBitState());
+            }
+        }
+
+        @Override
+        public void onExit() {
+            EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE, ));
+        }
+    }
+
+    private class EndBitState extends State{
+
+        @Override
+        public void onReceiveBit(int bit) {
+            assert bit == END_BIT;
+            changeState(new WaitDataState());
+        }
+    }
+
+    private void changeState(State newState){
+        state.onExit();
+        state = newState;
+    }
+
+
+
     /**
      * 会阻塞，放到其他线程
      */
-    public  void  receiveMessage(){
+    public void  receiveMessage(){
           if (APP.bluetoothSocket == null){
               return;
           }
@@ -65,8 +119,6 @@ public class ReceiveSocketService {
                 boolean isData = false;
                 int n = 0;//8位数据
 
-                byte[] data = new byte[8];
-                int dataIndex = 0;
                 while (true){
                     while (-1!=(n=inputStream.read())){
                         String binaryString = Integer.toBinaryString(n);
@@ -81,35 +133,11 @@ public class ReceiveSocketService {
 
                         //填充完接收的8位数据信息
 
-                        if(isData){//接收数据中
-                            for(int i=0;i<raw8BitData.length;++i){
-                                if(dataIndex==data.length){//应该是停止位
-                                    assert raw8BitData[i] == END_BIT;
-                                    isData = false;
-                                    dataIndex = 0;
-                                }
-                                if(isData){
-                                    data[dataIndex] = raw8BitData[i];
-                                }else {
-                                    if(raw8BitData[i]==BEGIN_BIT){
-                                        isData = true;
-                                    }
-                                }
-                            }
-                        }else {//等待数据位
-                            for(int i=0;i<raw8BitData.length;++i){
-                                if(raw8BitData[i]==BEGIN_BIT){
-                                    isData = true;
-                                }
-                                if(isData){
-                                    data[dataIndex] = raw8BitData[i];
-                                    dataIndex++;
-                                }
-                            }
+                        for(int i=0;i<raw8BitData.length;++i){
+                            state.onReceiveBit(raw8BitData[i]);
                         }
+
                     }
-
-
 
                 }
             }
