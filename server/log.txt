@@ -186,3 +186,13 @@ java.lang.ArrayIndexOutOfBoundsException: 90368
 [2019-05-05 18:17:41 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@17757a0b
 [2019-05-05 18:18:18 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@17d9f8d5
 [2019-05-05 18:20:22 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@17d9f8d5
+[2019-05-05 18:38:27 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@869c0c3
+[2019-05-05 18:41:42 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@869c0c3
+[2019-05-05 18:42:08 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@4eea8f
+[2019-05-05 18:42:48 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@4eea8f
+[2019-05-05 18:42:56 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@43a2d6a0
+[2019-05-05 18:43:25 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@43a2d6a0
+[2019-05-05 18:43:34 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@686eea4b
+[2019-05-05 18:44:12 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@686eea4b
+[2019-05-05 19:49:34 INFO][com.ljy.World]new client:com.ljy.misc.session.ClientSession@2e3bfca
+[2019-05-05 19:50:36 INFO][com.ljy.World]client disconnect:com.ljy.misc.session.ClientSession@2e3bfca

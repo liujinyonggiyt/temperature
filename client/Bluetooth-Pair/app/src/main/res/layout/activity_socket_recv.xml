@@ -59,13 +59,13 @@
             android:text="@string/btn_send" />
 
         <TextView
-            android:text="收到的服务器消息列表："
+            android:text="当前速度："
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ListView
-            android:id="@+id/listview"
+        <TextView
+            android:id="@+id/serverMsg"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </ListView>
+        </TextView>
     </LinearLayout>
 </LinearLayout>

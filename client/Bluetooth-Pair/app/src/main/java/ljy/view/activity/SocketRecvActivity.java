@@ -56,10 +56,8 @@ public class SocketRecvActivity extends BaseActivity {
     @BindView(R.id.text_send_btn)
     Button sendMsg;
 
-    @BindView(R.id.listview)
-    ListView msgReceive;
-    private ArrayAdapter adapter;
-    private LinkedList<String> msgList = new LinkedList<>();
+    @BindView(R.id.serverMsg)
+    TextView msgReceive;
 
     /**
      * 服务器连接
@@ -173,20 +171,15 @@ public class SocketRecvActivity extends BaseActivity {
                 break;
             case SocketMessageBean.ON_RECEIVE_MSG:{
                 RequestMsg requestMsg = socketMessageBean.getMsg();
-                String msg = requestMsg.getString();
-//                MyLog.i(Tag, "msg:"+requestMsg.getMsgCode()+"-"+msg);
-
-                msgList.addLast(msg+"\n");
-                if(msgList.size()>20){
-                    msgList.removeFirst();
+                ProtoEnum protoEnum = ProtoEnum.values()[requestMsg.getMsgCode()];
+                switch (protoEnum){
+                    case S_SEND_STRING:{
+                        String msg = requestMsg.getString();
+                        msgReceive.setText(msg+"M/s");
+                        break;
+                    }
+                    default:break;
                 }
-                if(null == adapter){
-                    adapter = new ArrayAdapter(SocketRecvActivity.this, android.R.layout.simple_list_item_1, msgList);
-                    msgReceive.setAdapter(adapter);
-                }else {
-                    adapter.notifyDataSetChanged();
-                }
-                break;
             }
             default:
                 break;

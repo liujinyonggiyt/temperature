@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">智能温度计</string>
+    <string name="app_name">智能测速仪</string>
     <string name="main_bluetooth_menu">打开蓝牙菜单</string>
     <string name="main_socket_menu">打开网络菜单</string>
     <string name="huoqubveidilanyamingcheng">获取本地蓝牙名称</string>

@@ -79,7 +79,7 @@ public class World extends EventConsumer<LogicEvent> {
         String msg = clientRequest.getString();
 //        logger.info("receive client string msg:"+msg);
         ServerResponse serverResponse = new ServerResponse(ProtoEnum.S_SEND_STRING);
-        serverResponse.writeUTF("receive client string msg:"+msg);
+        serverResponse.writeUTF(msg);
         sendMrg.broadcastMsg(serverResponse);
         return true;
     }
