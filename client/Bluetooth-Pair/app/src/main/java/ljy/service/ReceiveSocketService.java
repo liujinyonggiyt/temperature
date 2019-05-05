@@ -34,21 +34,31 @@ public class ReceiveSocketService {
     public static int get(int num, int index){
         return (num & (0x1 << index)) >> index;
     }
-    public static void main(String[] args){
-        int n = 230;
-        String binaryString = Integer.toBinaryString(n);
-        byte[] data = new byte[8];
-        int index=0;
-        for(int swapNum = 8-binaryString.getBytes().length;index<swapNum;++index){
-            data[index] = 0;
-        }
 
-        for (int i = binaryString.getBytes().length-1; i >=0 ; i--,++index){
-            data[index] = (byte) get(n, i);
-            System.out.print(get(n, i) + "\t");
+    public static int combineBit(byte[] bits){
+        int result = 0x0;
+        for(int i=0;i<bits.length;++i){
+            result = result|(bits[i]<<(bits.length-1-i));
         }
-        System.out.println();
-        System.out.println(Arrays.toString(data));
+        return result;
+    }
+
+    public static void main(String[] args){
+//        int n = 230;
+//        String binaryString = Integer.toBinaryString(n);
+//        byte[] data = new byte[8];
+//        int index=0;
+//        for(int swapNum = 8-binaryString.getBytes().length;index<swapNum;++index){
+//            data[index] = 0;
+//        }
+//
+//        for (int i = binaryString.getBytes().length-1; i >=0 ; i--,++index){
+//            data[index] = (byte) get(n, i);
+//            System.out.print(get(n, i) + "\t");
+//        }
+//        System.out.println();
+//        System.out.println(Arrays.toString(data));
+        System.out.println(combineBit(new byte[]{1,0,1,1,1}));
     }
 
 
@@ -83,7 +93,7 @@ public class ReceiveSocketService {
 
         @Override
         public void onExit() {
-            EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE, ));
+            EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE, ""+combineBit(data)));
         }
     }
 
