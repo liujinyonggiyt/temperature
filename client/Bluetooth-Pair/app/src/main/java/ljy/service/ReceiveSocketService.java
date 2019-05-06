@@ -5,6 +5,7 @@ import android.os.Environment;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,8 +59,10 @@ public class ReceiveSocketService {
 //        }
 //        System.out.println();
 //        System.out.println(Arrays.toString(data));
-        System.out.println(combineBit(new byte[]{1,0,1,1,1}));
+//        System.out.println(combineBit(new byte[]{1,0,1,1,1}));
+        new ReceiveSocketService().receiveMessage();
     }
+
 
 
     private static abstract class State{
@@ -93,7 +96,12 @@ public class ReceiveSocketService {
 
         @Override
         public void onExit() {
-            EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE, ""+combineBit(data)));
+            int intData = combineBit(data);
+            intData = ~intData;
+            String hexData = Integer.toHexString(intData);//16进制
+            System.out.println("hextData:"+hexData);
+            System.out.println("asic:"+(char)intData);
+            EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE, hexData));
         }
     }
 
@@ -116,36 +124,39 @@ public class ReceiveSocketService {
     /**
      * 会阻塞，放到其他线程
      */
-    public void  receiveMessage(){
-          if (APP.bluetoothSocket == null){
-              return;
-          }
+    public void receiveMessage(){
+//          if (APP.bluetoothSocket == null){
+//              return;
+//          }
         try {
-            InputStream inputStream = APP.bluetoothSocket.getInputStream();
+            byte[] input = new byte[]{0,  1,0,1,0,1,0,1,0, 1,0,  0,1,0,1,0,1,0,1,  1};
+            InputStream inputStream = new ByteArrayInputStream(input);
+//            InputStream inputStream = APP.bluetoothSocket.getInputStream();
             //串口消息 起始位（1）+数据位（8）+停止位（1）
             {
                 byte[] raw8BitData = new byte[8];
-                boolean isData = false;
                 int n = 0;//8位数据
 
                 while (true){
                     while (-1!=(n=inputStream.read())){
-                        String binaryString = Integer.toBinaryString(n);
-                        int index=0;
-                        for(int swapNum = 8-binaryString.getBytes().length;index<swapNum;++index){
-                            raw8BitData[index] = 0;
-                        }
+//                        String binaryString = Integer.toBinaryString(n);
+//                        int index=0;
+//                        for(int swapNum = 8-binaryString.getBytes().length;index<swapNum;++index){
+//                            raw8BitData[index] = 0;
+//                        }
+//
+//                        for (int i = binaryString.getBytes().length-1; i >=0 ; i--,++index){
+//                            raw8BitData[index] = (byte) get(n, i);
+//                        }
+//
+//                        //填充完接收的8位数据信息
+//
+//                        for(int i=0;i<raw8BitData.length;++i){
+//                            state.onReceiveBit(raw8BitData[i]);
+//                        }
 
-                        for (int i = binaryString.getBytes().length-1; i >=0 ; i--,++index){
-                            raw8BitData[index] = (byte) get(n, i);
-                        }
 
-                        //填充完接收的8位数据信息
-
-                        for(int i=0;i<raw8BitData.length;++i){
-                            state.onReceiveBit(raw8BitData[i]);
-                        }
-
+                        state.onReceiveBit(n);
                     }
 
                 }
