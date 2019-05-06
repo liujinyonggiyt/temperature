@@ -20,5 +20,10 @@
         android:text="@string/main_socket_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/buttion_go_qrcode"
+        android:text="打开二维码菜单"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -70,7 +70,7 @@ public class World extends EventConsumer<LogicEvent> {
     }
     private boolean C_PING_handler(ClientSession clientSession, ClientRequest clientRequest)throws Exception{
         String msg = clientRequest.getString();
-        logger.info("receive client ping msg："+msg);
+        logger.info("receive client ping msg:"+msg);
         ServerResponse response = new ServerResponse(ProtoEnum.S_PING_RESULT);
         sendMrg.sendToClientForAAAAAAAA(clientSession.getChannel(), response);
         return true;
@@ -92,7 +92,7 @@ public class World extends EventConsumer<LogicEvent> {
     public final void AS_on_client_register(LogicEvent data) throws Exception {
         ClientSession clientSession = new ClientSession(data.getChannel(), systemTimeMrg.getSysSecTime());
         clientSessionMrg.addSession(clientSession);
-        logger.info("new client:"+clientSession);
+//        logger.info("new client:"+clientSession);
 
     }
 
@@ -107,7 +107,7 @@ public class World extends EventConsumer<LogicEvent> {
             if (null == clientSession) {
                 return;
             }
-            logger.info("client disconnect:"+clientSession);
+//            logger.info("client disconnect:"+clientSession);
            clientSessionMrg.removeSession(logicEvent.getChannel());
 
             //TODO

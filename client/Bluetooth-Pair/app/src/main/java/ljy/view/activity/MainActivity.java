@@ -22,6 +22,8 @@ public class MainActivity extends BaseActivity {
     Button goBluetoothMenu;
     @BindView(R.id.buttion_go_socket)
     Button goSocketMenu;
+    @BindView(R.id.buttion_go_qrcode)
+    Button goQrcodeMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class MainActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket})
+    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket, R.id.buttion_go_qrcode})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -59,6 +61,11 @@ public class MainActivity extends BaseActivity {
                 }
                 case R.id.buttion_go_socket:{
                     Intent intent = new Intent(MainActivity.this, SocketRecvActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.buttion_go_qrcode:{
+                    Intent intent = new Intent(MainActivity.this, QrCodeActivity.class);
                     startActivity(intent);
                     break;
                 }

@@ -125,13 +125,11 @@ public class ReceiveSocketService {
      * 会阻塞，放到其他线程
      */
     public void receiveMessage(){
-//          if (APP.bluetoothSocket == null){
-//              return;
-//          }
+          if (APP.bluetoothSocket == null){
+              return;
+          }
         try {
-            byte[] input = new byte[]{0,  1,0,1,0,1,0,1,0, 1,0,  0,1,0,1,0,1,0,1,  1};
-            InputStream inputStream = new ByteArrayInputStream(input);
-//            InputStream inputStream = APP.bluetoothSocket.getInputStream();
+            InputStream inputStream = APP.bluetoothSocket.getInputStream();
             //串口消息 起始位（1）+数据位（8）+停止位（1）
             {
                 byte[] raw8BitData = new byte[8];
