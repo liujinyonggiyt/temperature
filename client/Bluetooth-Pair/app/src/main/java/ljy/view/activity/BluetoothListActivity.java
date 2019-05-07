@@ -80,6 +80,7 @@ public class BluetoothListActivity extends BaseActivity {
     private AlertDialog alertDialog;
     private BlueToothReceiver blueToothReceiver = new BlueToothReceiver();
     private final int connectsuccess = 12;//连接成功
+    private final int connectfail = 13;//连接失败
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
@@ -312,6 +313,9 @@ public class BluetoothListActivity extends BaseActivity {
                 intent.putExtra("devicename", bluRxBean.getBluetoothDevice().getName());
                 startActivity(intent);
                 break;
+            case connectfail:
+                alertDialog.dismiss();
+                break;
             default:
                 break;
         }
@@ -329,23 +333,44 @@ public class BluetoothListActivity extends BaseActivity {
                     bluetoothadapter.cancelDiscovery();
                 }
                 if (!mBluetoothSocket.isConnected()) {
-                    mBluetoothSocket.connect();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                mBluetoothSocket.connect();
+                                EventBus.getDefault().post(new BluRxBean(connectsuccess, bluetoothDevice));
+                            } catch (IOException e) {
+                                Method m = null;
+                                try {
+                                    m = bluetoothDevice.getClass().getMethod("createRfcommSocket", new Class[]{int.class});
+                                    mBluetoothSocket = (BluetoothSocket) m.invoke(bluetoothDevice, 1);
+                                    APP.bluetoothSocket = mBluetoothSocket;
+                                } catch (Exception e1) {
+                                    MyLog.e(Tag, "", e);
+                                    EventBus.getDefault().post(new BluRxBean(connectfail, bluetoothDevice));
+                                }
+
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            mBluetoothSocket.connect();
+                                            EventBus.getDefault().post(new BluRxBean(connectsuccess, bluetoothDevice));
+                                        } catch (Exception e1) {
+                                            MyLog.e(Tag,"", e);
+                                            EventBus.getDefault().post(new BluRxBean(connectfail, bluetoothDevice));
+                                        }
+                                    }
+                                }).start();
+                            }
+                        }
+                    }).start();
                 }
-                EventBus.getDefault().post(new BluRxBean(connectsuccess, bluetoothDevice));
             }
         } catch (IOException e) {
             MyLog.e(Tag,"", e);
-            try {
-                mBluetoothSocket.close();
-            } catch (IOException e1) {
-                MyLog.e(Tag,"", e);
-            }
         }
     }
 
-
-    /**
-     * 配对成功后的蓝牙套接字
-     */
-    private BluetoothSocket mBluetoothSocket;
+    private volatile BluetoothSocket mBluetoothSocket;
 }

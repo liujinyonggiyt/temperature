@@ -18,7 +18,7 @@ import ljy.utils.ToastUtil;
 
 public class BlueToothReceiver extends BroadcastReceiver {
 
-    private String TAG = "蓝牙广播";
+    private static final String TAG = "BlueToothReceiver";
     public static final int findDevice = 1;//查找设备
     public static final int findDeviceIsFinished = 2;//扫描完成
     public static final int findtart = 3;//开始扫描
@@ -48,10 +48,12 @@ public class BlueToothReceiver extends BroadcastReceiver {
                 break;
             //找到设备
             case BluetoothDevice.ACTION_FOUND:
-                MyLog.d(TAG, "查找设备");
                 BluetoothDevice device = intent
                         .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                EventBus.getDefault().post(new BluRxBean(findDevice,device));
+                if(null!=device.getName()){
+                    EventBus.getDefault().post(new BluRxBean(findDevice,device));
+                }
+                MyLog.d(TAG, "找到设备:"+device.getName()+","+device.getAddress());
                 break;
             //搜索完成
             case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:

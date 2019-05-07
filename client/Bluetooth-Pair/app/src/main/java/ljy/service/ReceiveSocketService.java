@@ -28,6 +28,7 @@ public class ReceiveSocketService {
     private static final byte BEGIN_BIT = 0;//起始位
     private static final byte END_BIT = 1-BEGIN_BIT;//停止位
     private State state = new WaitDataState();
+    private volatile boolean running = true;
     /**
      * @param num:要获取二进制值的数
      * @param index:倒数第一位为0，依次类推
@@ -119,7 +120,9 @@ public class ReceiveSocketService {
         state = newState;
     }
 
-
+    public void stop(){
+        running = false;
+    }
 
     /**
      * 会阻塞，放到其他线程
@@ -135,7 +138,7 @@ public class ReceiveSocketService {
                 byte[] raw8BitData = new byte[8];
                 int n = 0;//8位数据
 
-                while (true){
+                while (running){
                     while (-1!=(n=inputStream.read())){
 //                        String binaryString = Integer.toBinaryString(n);
 //                        int index=0;

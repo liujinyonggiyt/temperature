@@ -42,7 +42,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
     @BindView(R.id.text)
     TextView text;
 
-
+    private final ReceiveSocketService receiveSocketService = new ReceiveSocketService();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
             ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
                 @Override
                 public void run() {
-                    new ReceiveSocketService().receiveMessage();
+                    receiveSocketService.receiveMessage();
                 }
             });
         }catch (Exception e){
@@ -91,6 +91,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        receiveSocketService.stop();
     }
 
     /**

@@ -18,7 +18,7 @@ import ljy.utils.MyLog;
 public class APP extends Application {
     private final String TAG = "APP";
     //不管是蓝牙连接方还是服务器方，得到socket对象后都传入
-    public static BluetoothSocket bluetoothSocket;
+    public static volatile BluetoothSocket bluetoothSocket;
     public static Context context;
 
     @Override
