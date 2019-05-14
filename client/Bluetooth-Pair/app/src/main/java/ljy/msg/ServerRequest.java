@@ -14,11 +14,9 @@ public class ServerRequest implements RequestMsg {
 	byte[] buffer = null;
 	int msgcode;
 	long receiveTime=System.currentTimeMillis();
-	@Override
 	public int getTotalBytes() {
 		return buffer.length+4;
 	}
-	@Override
 	public long getReceiveTime() {
 		return receiveTime;
 	}
@@ -33,10 +31,10 @@ public class ServerRequest implements RequestMsg {
 		buffer = array;
 
 		util = DataIOUtil.newInstance4In(array);
-		try {
-			msgcode = util.readInt();
-		} catch (IOException e) {
-		}
+//		try {
+//			msgcode = util.readInt();
+//		} catch (IOException e) {
+//		}
 	}
     
 	public DataIOUtil getUtil() {
@@ -47,41 +45,33 @@ public class ServerRequest implements RequestMsg {
 		return msgcode;
 	}
 
-	@Override
 	public byte getByte() throws IOException {
 		return util.readByte();
 	}
 
-	@Override
 	public short getShort() throws IOException {
 		return util.readShort();
 	}
 
-	@Override
 	public int getInt() throws IOException {
 		return util.readInt();
 	}
 
-	@Override
 	public long getLong() throws IOException {
 		return util.readLong();
 	}
 
-	@Override
 	public float getFloat() throws IOException {
 		return util.readFloat();
 	}
 
-	@Override
 	public double getDouble() throws IOException {
 		return util.readDouble();
 	}
 
-	@Override
 	public String getString() throws IOException {
 		return util.readUTF();
 	}
-	@Override
 	public Object getObj() throws IOException, ClassNotFoundException {
 		return util.readObj();
 	}

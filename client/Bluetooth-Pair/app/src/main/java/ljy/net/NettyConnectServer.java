@@ -3,6 +3,7 @@ package ljy.net;
 import com.ljy.ProtoEnum;
 
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -12,16 +13,22 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
+import ljy.msg.ByteStringRequest;
 import ljy.msg.RequestMsg;
 import ljy.msg.ServerRequest;
 import ljy.msg.ServerResponse;
+import ljy.utils.MyLog;
 
 public class NettyConnectServer extends AbsConnectServer {
     private SocketChannel socketChannel;
@@ -38,7 +45,26 @@ public class NettyConnectServer extends AbsConnectServer {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline pipeline = socketChannel.pipeline();
                         pipeline.addLast(new IdleStateHandler(0, 30, 0));
-                        pipeline.addLast(new ProtoDecoderHandle(8192));
+//                        pipeline.addLast(new ProtoDecoderHandle(8192));
+
+                        //指定分隔符
+                        ByteBuf[] delimiter = new ByteBuf[] {
+                                Unpooled.wrappedBuffer(new byte[] { (byte)13 })
+//                                Unpooled.wrappedBuffer(new byte[] { '\r', '\n' }),
+//                                Unpooled.wrappedBuffer(new byte[] { '\n' }),
+                        };
+                        pipeline.addLast(new DelimiterBasedFrameDecoder(8192, delimiter));
+
+//                        pipeline.addLast(new FixedLengthFrameDecoder(6));
+
+                        pipeline.addLast(new StringDecoder());
+                        pipeline.addLast(new SimpleChannelInboundHandler<String>() {
+                            @Override
+                            protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+                                RequestMsg serverRequest = new ByteStringRequest(msg.getBytes());
+                                callback.onReceived(serverRequest);
+                            }
+                        });
                         pipeline.addLast(new SocketEncoder());
                     }
                 })
@@ -57,6 +83,7 @@ public class NettyConnectServer extends AbsConnectServer {
                     }
                 });
     }
+
 
     private class ProtoDecoderHandle extends LengthFieldBasedFrameDecoder {
 
@@ -90,7 +117,7 @@ public class NettyConnectServer extends AbsConnectServer {
             byte[] bytes = new byte[rtBuf.readableBytes()];
             rtBuf.readBytes(bytes);
 
-            RequestMsg serverRequest = new ServerRequest(bytes);
+            RequestMsg serverRequest = new ByteStringRequest(bytes);
             callback.onReceived(serverRequest);
             return Unpooled.EMPTY_BUFFER;
         }
@@ -109,6 +136,11 @@ public class NettyConnectServer extends AbsConnectServer {
         if(null!=socketChannel){
             socketChannel.writeAndFlush(serverResponse);
         }
+    }
+
+    @Override
+    public void sendMsg(ByteBuf serverResponse) {
+        socketChannel.writeAndFlush(serverResponse);
     }
 
     @Override

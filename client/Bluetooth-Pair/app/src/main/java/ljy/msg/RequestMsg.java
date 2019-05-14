@@ -11,23 +11,5 @@ import java.io.IOException;
  * 
  * @author wutao
  */
-public interface RequestMsg {
-	public int getMsgCode();
-	public int getTotalBytes();
-	public long getReceiveTime();
-	public DataIOUtil getUtil();
-	public byte getByte() throws IOException;
-
-	public short getShort() throws IOException;
-
-	public int getInt() throws IOException;
-
-	public long getLong() throws IOException;
-
-	public float getFloat() throws IOException;
-
-	public double getDouble() throws IOException;
-
-	public String getString() throws IOException;
-	public Object getObj() throws IOException,ClassNotFoundException;
+public interface RequestMsg{
 }

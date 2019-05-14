@@ -92,7 +92,7 @@ public class World extends EventConsumer<LogicEvent> {
     public final void AS_on_client_register(LogicEvent data) throws Exception {
         ClientSession clientSession = new ClientSession(data.getChannel(), systemTimeMrg.getSysSecTime());
         clientSessionMrg.addSession(clientSession);
-//        logger.info("new client:"+clientSession);
+        logger.info("new client:"+clientSession);
 
     }
 
@@ -107,7 +107,7 @@ public class World extends EventConsumer<LogicEvent> {
             if (null == clientSession) {
                 return;
             }
-//            logger.info("client disconnect:"+clientSession);
+            logger.info("client disconnect:"+clientSession);
            clientSessionMrg.removeSession(logicEvent.getChannel());
 
             //TODO

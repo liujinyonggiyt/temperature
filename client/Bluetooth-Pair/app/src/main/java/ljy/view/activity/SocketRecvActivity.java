@@ -2,13 +2,9 @@ package ljy.view.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,15 +15,17 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.nio.ByteBuffer;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.SocketMessageBean;
 import ljy.bluetooth.R;
+import ljy.msg.ByteStringRequest;
 import ljy.msg.RequestMsg;
 import ljy.msg.ServerResponse;
 import ljy.net.AbsConnectServer;
@@ -148,8 +146,11 @@ public class SocketRecvActivity extends BaseActivity {
                         Toast.makeText(SocketRecvActivity.this, "请先连接服务器！", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    ServerResponse serverResponse = new ServerResponse(ProtoEnum.C_SEND_STRING);
-                    serverResponse.writeUTF(tosend_edit_text.getText().toString());
+//                    ServerResponse serverResponse = new ServerResponse(ProtoEnum.C_SEND_STRING);
+//                    serverResponse.writeUTF(tosend_edit_text.getText().toString());
+                    String msg = tosend_edit_text.getText().toString();
+                    ByteBuf serverResponse = Unpooled.buffer(msg.length());
+                    serverResponse.writeBytes(msg.getBytes());
                     connectServer.sendMsg(serverResponse);
                     break;
                 }
@@ -170,16 +171,20 @@ public class SocketRecvActivity extends BaseActivity {
                 connectState.setText("服务器连接状态:未连接");
                 break;
             case SocketMessageBean.ON_RECEIVE_MSG:{
-                RequestMsg requestMsg = socketMessageBean.getMsg();
-                ProtoEnum protoEnum = ProtoEnum.values()[requestMsg.getMsgCode()];
-                switch (protoEnum){
-                    case S_SEND_STRING:{
-                        String msg = requestMsg.getString();
-                        msgReceive.setText(msg+"M/s");
-                        break;
-                    }
-                    default:break;
-                }
+                ByteStringRequest requestMsg = (ByteStringRequest) socketMessageBean.getMsg();
+//                System.out.println(requestMsg.getString());
+//                ProtoEnum protoEnum = ProtoEnum.values()[requestMsg.getMsgCode()];
+//                switch (protoEnum){
+//                    case S_SEND_STRING:{
+//                        String msg = requestMsg.getString();
+//                        msgReceive.setText(msg+"M/s");
+//                        break;
+//                    }
+//                    default:break;
+//                }
+
+                String msg = new String(requestMsg.getBytes(), "UTF-8");
+                msgReceive.setText(msg+"M/s");
             }
             default:
                 break;

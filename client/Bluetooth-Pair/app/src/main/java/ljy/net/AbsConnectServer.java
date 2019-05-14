@@ -54,6 +54,7 @@ public abstract class AbsConnectServer {
     public abstract void disconnect();
 
     public abstract void sendMsg(ServerResponse serverResponse);
+    public abstract void sendMsg(ByteBuf serverResponse);
 
     public abstract boolean isActive();
     public void setState(State state){

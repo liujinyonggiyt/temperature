@@ -23,6 +23,9 @@ public class SocketEncoder extends ChannelOutboundHandlerAdapter
 			{
 				ServerResponse serverResponse = (ServerResponse) msg;
 				writeImpl(ctx,promise, serverResponse);
+			}else if(msg instanceof ByteBuf){
+				ByteBuf byteBuf = (ByteBuf) msg;
+				writeBuffer(ctx,byteBuf,promise);
 			}
 			else
 			{
