@@ -134,57 +134,57 @@ public class ReceiveSocketService {
         try {
             InputStream inputStream = APP.bluetoothSocket.getInputStream();
             //串口消息 起始位（1）+数据位（8）+停止位（1）
-            {
-                byte[] raw8BitData = new byte[8];
-                int n = 0;//8位数据
-
-                while (running){
-                    while (-1!=(n=inputStream.read())){
-//                        String binaryString = Integer.toBinaryString(n);
-//                        int index=0;
-//                        for(int swapNum = 8-binaryString.getBytes().length;index<swapNum;++index){
-//                            raw8BitData[index] = 0;
-//                        }
+//            {
+//                byte[] raw8BitData = new byte[8];
+//                int n = 0;//8位数据
 //
-//                        for (int i = binaryString.getBytes().length-1; i >=0 ; i--,++index){
-//                            raw8BitData[index] = (byte) get(n, i);
-//                        }
+//                while (running){
+//                    while (-1!=(n=inputStream.read())){
+////                        String binaryString = Integer.toBinaryString(n);
+////                        int index=0;
+////                        for(int swapNum = 8-binaryString.getBytes().length;index<swapNum;++index){
+////                            raw8BitData[index] = 0;
+////                        }
+////
+////                        for (int i = binaryString.getBytes().length-1; i >=0 ; i--,++index){
+////                            raw8BitData[index] = (byte) get(n, i);
+////                        }
+////
+////                        //填充完接收的8位数据信息
+////
+////                        for(int i=0;i<raw8BitData.length;++i){
+////                            state.onReceiveBit(raw8BitData[i]);
+////                        }
 //
-//                        //填充完接收的8位数据信息
 //
-//                        for(int i=0;i<raw8BitData.length;++i){
-//                            state.onReceiveBit(raw8BitData[i]);
-//                        }
-
-
-                        state.onReceiveBit(n);
-                    }
-
-                }
-            }
-            // 从客户端获取信息
-//            BufferedReader bff = new BufferedReader(new InputStreamReader(inputStream));
-//            String json;
-//            while (true) {
-//                while ((json = bff.readLine()) != null) {
-//                    EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE,json));
-//                }
-//                if ("file".equals(json)) {
-//                    FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() + "/test.gif");
-//                    int length;
-//                    int fileSzie = 0;
-//                    byte[] b = new byte[1024];
-//                    // 2、把socket输入流写到文件输出流中去
-//                    while ((length = inputStream.read(b)) != -1) {
-//                        fos.write(b, 0, length);
-//                        fileSzie += length;
-//                        System.out.println("当前大小：" + fileSzie);
-//                        //这里通过先前传递过来的文件大小作为参照，因为该文件流不能自主停止，所以通过判断文件大小来跳出循环
+//                        state.onReceiveBit(n);
 //                    }
-//                    fos.close();
-//                    EventBus.getDefault().post(new BlueMessageBean(RECEIVER_FILE,"文件保存成功"));
+//
 //                }
 //            }
+            // 从客户端获取信息
+            BufferedReader bff = new BufferedReader(new InputStreamReader(inputStream));
+            String json;
+            while (true) {
+                while ((json = bff.readLine()) != null) {
+                    EventBus.getDefault().post(new BlueMessageBean(RECEIVER_MESSAGE,json));
+                }
+                if ("file".equals(json)) {
+                    FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() + "/test.gif");
+                    int length;
+                    int fileSzie = 0;
+                    byte[] b = new byte[1024];
+                    // 2、把socket输入流写到文件输出流中去
+                    while ((length = inputStream.read(b)) != -1) {
+                        fos.write(b, 0, length);
+                        fileSzie += length;
+                        System.out.println("当前大小：" + fileSzie);
+                        //这里通过先前传递过来的文件大小作为参照，因为该文件流不能自主停止，所以通过判断文件大小来跳出循环
+                    }
+                    fos.close();
+                    EventBus.getDefault().post(new BlueMessageBean(RECEIVER_FILE,"文件保存成功"));
+                }
+            }
         } catch (IOException e) {
             MyLog.e(TAG, e.getMessage(), e);
         }

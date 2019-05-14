@@ -106,8 +106,9 @@ public class BluetoothTongxunActivity extends BaseActivity {
     public void onMessageEvent(BlueMessageBean blueMessageBean) {
         switch (blueMessageBean.getId()) {
             case ReceiveSocketService.RECEIVER_MESSAGE:
-                MyLog.d("收到消息", blueMessageBean.getContent());
-                text.append("收到消息:" + blueMessageBean.getContent() + "\n");
+//                MyLog.d("收到消息", blueMessageBean.getContent());
+//                text.append("收到消息:" + blueMessageBean.getContent() + "\n");
+                text.setText("当前速度:"+blueMessageBean.getContent()+"M/s");
                 break;
             case BltContant.SEND_TEXT_SUCCESS:
                 text.append("我:" + goEditText.getText().toString() + "\n");

@@ -76,6 +76,7 @@ public class BluetoothListActivity extends BaseActivity {
     private BluetoothAdapter bluetoothadapter;
     private SimpleAdapter adapter;
     private List<Map<String, String>> list;
+    private Map<String, Map<String, String>> name_map;
     private List<BluetoothDevice> listdevice;
     private AlertDialog alertDialog;
     private BlueToothReceiver blueToothReceiver = new BlueToothReceiver();
@@ -124,6 +125,7 @@ public class BluetoothListActivity extends BaseActivity {
         titlebar.setImmersive(true);
         titlebar.setTitleColor(Color.WHITE);
         list = new ArrayList<>();
+        name_map = new HashMap<>();
         listdevice = new ArrayList<>();
         /**
          * listview监听事件 即配对
@@ -165,6 +167,7 @@ public class BluetoothListActivity extends BaseActivity {
 
 
         list.clear();
+        name_map.clear();
         if (adapter != null){
             adapter.notifyDataSetChanged();
             bluemessage.setText("");
@@ -282,14 +285,29 @@ public class BluetoothListActivity extends BaseActivity {
                 // 添加到列表
 //                bluemessage.append(bluRxBean.getBluetoothDevice().getName() + ":"
 //                        + bluRxBean.getBluetoothDevice().getAddress() + "\n");
-                Map<String, String> map = new HashMap<>();
-                map.put("deviceName", bluRxBean.getBluetoothDevice().getName() + ":" + bluRxBean.getBluetoothDevice().getAddress());
+
+                String deviceName = bluRxBean.getBluetoothDevice().getName();
+                String state = "";
                 if (bluRxBean.getBluetoothDevice().getBondState() != BluetoothDevice.BOND_BONDED) {
-                    map.put("statue", "未配对");
+                    state = "未配对";
                 } else {
-                    map.put("statue", "已配对");
+                    state = "已配对";
                 }
-                list.add(map);
+                if(name_map.containsKey(deviceName)){//已在缓存中
+                    Map<String, String> stateMap = name_map.get(deviceName);
+                    stateMap.put("statue", state);
+                }else{//没在缓存中
+                    Map<String, String> map = new HashMap<>();
+                    map.put("deviceName", deviceName + ":" + bluRxBean.getBluetoothDevice().getAddress());
+                    if (bluRxBean.getBluetoothDevice().getBondState() != BluetoothDevice.BOND_BONDED) {
+                        map.put("statue", "未配对");
+                    } else {
+                        map.put("statue", "已配对");
+                    }
+                    list.add(map);
+                    name_map.put(deviceName, map);
+                }
+
                 if(null == adapter){
                     adapter = new SimpleAdapter(BluetoothListActivity.this, list, R.layout.devices,
                             new String[]{"deviceName", "statue"}, new int[]{R.id.devicename, R.id.statue});
