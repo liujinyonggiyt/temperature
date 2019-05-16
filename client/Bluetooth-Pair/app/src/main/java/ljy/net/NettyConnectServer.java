@@ -45,17 +45,14 @@ public class NettyConnectServer extends AbsConnectServer {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline pipeline = socketChannel.pipeline();
                         pipeline.addLast(new IdleStateHandler(0, 30, 0));
-//                        pipeline.addLast(new ProtoDecoderHandle(8192));
 
                         //指定分隔符
                         ByteBuf[] delimiter = new ByteBuf[] {
-                                Unpooled.wrappedBuffer(new byte[] { (byte)13 })
-//                                Unpooled.wrappedBuffer(new byte[] { '\r', '\n' }),
-//                                Unpooled.wrappedBuffer(new byte[] { '\n' }),
+                                Unpooled.wrappedBuffer(new byte[] { '\r', '\n' }),
+                                Unpooled.wrappedBuffer(new byte[] { '\n' }),//10
+                                Unpooled.wrappedBuffer(new byte[] { '\r' }),//13
                         };
                         pipeline.addLast(new DelimiterBasedFrameDecoder(8192, delimiter));
-
-//                        pipeline.addLast(new FixedLengthFrameDecoder(6));
 
                         pipeline.addLast(new StringDecoder());
                         pipeline.addLast(new SimpleChannelInboundHandler<String>() {
