@@ -62,6 +62,7 @@
         <!--二维码-->
         <activity android:name="ljy.view.activity.QrCodeActivity"></activity>
         <activity android:name="com.google.zxing.activity.CaptureActivity"></activity>
+        <activity android:name="ljy.view.activity.BindActivity"></activity>
     </application>
 
 </manifest>

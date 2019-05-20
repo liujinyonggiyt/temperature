@@ -57,6 +57,13 @@ public class NettyConnectServer extends AbsConnectServer {
                         pipeline.addLast(new StringDecoder());
                         pipeline.addLast(new SimpleChannelInboundHandler<String>() {
                             @Override
+                            public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+                                super.channelInactive(ctx);
+                                setState(State.INIT);
+                                callback.onDisconnected();
+                            }
+
+                            @Override
                             protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
                                 RequestMsg serverRequest = new ByteStringRequest(msg.getBytes());
                                 callback.onReceived(serverRequest);

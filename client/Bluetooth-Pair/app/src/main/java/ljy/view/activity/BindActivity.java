@@ -15,12 +15,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.SocketMessageBean;
@@ -37,9 +35,10 @@ import static ljy.base.bean.SocketMessageBean.ON_RECEIVE_MSG;
 import static ljy.base.bean.SocketMessageBean.SOCKET_CONNECTED;
 import static ljy.base.bean.SocketMessageBean.SOCKET_DISCONNECTED;
 
-public class SocketRecvActivity extends BaseActivity {
+public class BindActivity extends BaseActivity {
     @BindView(R.id.titlebar)
     TitleBar titlebar;
+
     @BindView(R.id.socket_ip)
     EditText ip_editText;
     @BindView(R.id.socket_port)
@@ -49,10 +48,13 @@ public class SocketRecvActivity extends BaseActivity {
     @BindView(R.id.connectStat)
     TextView connectState;
 
-    @BindView(R.id.tosend_edit_text)
-    EditText tosend_edit_text;
-    @BindView(R.id.text_send_btn)
-    Button sendMsg;
+    @BindView(R.id.socket_bind_ip)
+    EditText socket_bind_ipText;
+    @BindView(R.id.buttion_bind)
+    Button bindButton;
+    @BindView(R.id.bindStat)
+    TextView bindStat;
+
 
     @BindView(R.id.serverMsg)
     TextView msgReceive;
@@ -66,7 +68,7 @@ public class SocketRecvActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        titlebar.setTitle("网络通信");
+        titlebar.setTitle("设备绑定");
         titlebar.setBackgroundResource(R.color.blue);
         titlebar.setImmersive(true);
         titlebar.setTitleColor(Color.WHITE);
@@ -74,7 +76,7 @@ public class SocketRecvActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_socket_recv;
+        return R.layout.activity_bind;
     }
     @Override
     protected void onDestroy() {
@@ -88,7 +90,7 @@ public class SocketRecvActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_connet_server, R.id.text_send_btn})
+    @OnClick({R.id.buttion_connet_server, R.id.buttion_bind})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -141,14 +143,12 @@ public class SocketRecvActivity extends BaseActivity {
                     });
                     break;
                 }
-                case R.id.text_send_btn:{//发送消息
+                case R.id.buttion_bind:{//绑定设备
                     if(!connectServer.isActive()){
-                        Toast.makeText(SocketRecvActivity.this, "请先连接服务器！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BindActivity.this, "请先连接服务器！", Toast.LENGTH_SHORT).show();
                         return;
                     }
-//                    ServerResponse serverResponse = new ServerResponse(ProtoEnum.C_SEND_STRING);
-//                    serverResponse.writeUTF(tosend_edit_text.getText().toString());
-                    String msg = tosend_edit_text.getText().toString()+"\r\n";
+                    String msg = "bind:"+socket_bind_ipText.getText().toString()+"\r\n";
                     ByteBuf serverResponse = Unpooled.buffer(msg.length());
                     serverResponse.writeBytes(msg.getBytes());
                     connectServer.sendMsg(serverResponse);
@@ -166,9 +166,19 @@ public class SocketRecvActivity extends BaseActivity {
         switch (socketMessageBean.getId()) {
             case SocketMessageBean.SOCKET_CONNECTED:
                 connectState.setText("服务器连接状态:已连接");
+                //隐藏
+                ip_editText.setVisibility(View.GONE);
+                port_editText.setVisibility(View.GONE);
+                connect.setVisibility(View.GONE);
                 break;
             case SocketMessageBean.SOCKET_DISCONNECTED:
                 connectState.setText("服务器连接状态:未连接");
+                ip_editText.setVisibility(View.VISIBLE);
+                port_editText.setVisibility(View.VISIBLE);
+                connect.setVisibility(View.VISIBLE);
+
+                socket_bind_ipText.setVisibility(View.VISIBLE);
+                bindButton.setVisibility(View.VISIBLE);
                 break;
             case SocketMessageBean.ON_RECEIVE_MSG:{
                 ByteStringRequest requestMsg = (ByteStringRequest) socketMessageBean.getMsg();
@@ -184,7 +194,21 @@ public class SocketRecvActivity extends BaseActivity {
 //                }
 
                 String msg = new String(requestMsg.getBytes(), "UTF-8");
-                msgReceive.setText(msg+"M/s");
+
+                if(msg.startsWith("bindSuccess:")){//绑定设备成功
+                    bindStat.setText(msg.replace("bindSuccess:", ""));
+                    //隐藏
+                    socket_bind_ipText.setVisibility(View.GONE);
+                    bindButton.setVisibility(View.GONE);
+                }else if(msg.startsWith("unbind:")){
+                    bindStat.setText("None");
+                    //隐藏
+                    socket_bind_ipText.setVisibility(View.VISIBLE);
+                    bindButton.setVisibility(View.VISIBLE);
+                }else{
+                    msgReceive.setText(msg+"M/s");
+                }
+
             }
             default:
                 break;

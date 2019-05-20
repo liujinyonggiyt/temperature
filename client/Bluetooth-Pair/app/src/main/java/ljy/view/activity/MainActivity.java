@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket, R.id.buttion_go_qrcode})
+    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket, R.id.buttion_go_qrcode, R.id.buttion_go_bind})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -61,6 +61,11 @@ public class MainActivity extends BaseActivity {
                 }
                 case R.id.buttion_go_socket:{
                     Intent intent = new Intent(MainActivity.this, SocketRecvActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.buttion_go_bind:{
+                    Intent intent = new Intent(MainActivity.this, BindActivity.class);
                     startActivity(intent);
                     break;
                 }

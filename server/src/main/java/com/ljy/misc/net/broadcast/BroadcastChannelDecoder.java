@@ -1,4 +1,4 @@
-package com.ljy.misc.net;
+package com.ljy.misc.net.broadcast;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
