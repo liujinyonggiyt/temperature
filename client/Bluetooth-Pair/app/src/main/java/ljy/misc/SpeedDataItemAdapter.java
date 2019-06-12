@@ -57,7 +57,7 @@ public class SpeedDataItemAdapter extends ArrayAdapter<SpeedData> {
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.checkBox.setChecked(speedData.checked);
-        viewHolder.order.setText("序号："+speedData.getOrder()+"， ");
+        viewHolder.order.setText("序号："+(position+1)+"， ");
         viewHolder.speed.setText("速度："+speedData.getSpeed()+"M/s， ");
         viewHolder.time.setText("时间："+speedData.getTime());
         return view;

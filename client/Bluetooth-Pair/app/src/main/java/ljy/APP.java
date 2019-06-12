@@ -28,8 +28,6 @@ public class APP extends Application {
         context = getApplicationContext();
         LitePal.initialize(context);//初始化sqlite ORM
 
-        SqliteMrg.getInstance();
-
 //        if(BuildConfig.DEBUG){
             Log.initialize(context);
 //        }

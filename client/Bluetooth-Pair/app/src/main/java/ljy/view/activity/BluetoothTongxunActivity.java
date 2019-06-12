@@ -110,8 +110,8 @@ public class BluetoothTongxunActivity extends BaseActivity {
                     speed = Float.parseFloat(speedStr);
                 }
                 SpeedData speedData = new SpeedData(2, speed, SystemTimeMrg.getInstance().getCurTime());
-
-                CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(BluetoothTongxunActivity.this, speedData);
+                int order = SqliteMrg.getInstance().getNextSpeedDataId();
+                CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(BluetoothTongxunActivity.this, order, speedData);
                 createSpeedDataDialog.show();
                 break;
             }

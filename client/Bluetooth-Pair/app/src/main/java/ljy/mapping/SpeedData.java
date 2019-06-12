@@ -2,42 +2,37 @@ package ljy.mapping;
 
 import org.litepal.crud.LitePalSupport;
 
+import ljy.mrg.SqliteMrg;
+
 public class SpeedData extends LitePalSupport {
-    private static int nextId;
-    private int order;
     /**
      * 1：蓝牙数据
      * 2：网络数据
      */
-    private final int type;
+    private int type;
     private float speed;
     private String time;
+
     /**
      * 查看功能里，是否被选中(不入库)
+     *
      */
     public boolean checked = false;
 
-    public static void setNextId(int next){
-        nextId = next;
-    }
-
-    public static int getNextId(){
-        return nextId;
-    }
-
     public SpeedData(int type, float speed, String time) {
-        this.order = getNextId();
         this.type = type;
         this.speed = speed;
         this.time = time;
     }
 
-    public int getOrder() {
-        return order;
+    public void copyFrom(SpeedData srcData){
+        setType(srcData.getType());
+        setSpeed(srcData.getSpeed());
+        setTime(srcData.getTime());
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getType() {

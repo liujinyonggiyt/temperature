@@ -17,7 +17,6 @@ import ljy.base.bean.SpeedDataBus;
 import ljy.base.constant.SpeedDataContant;
 import ljy.bluetooth.R;
 import ljy.mapping.SpeedData;
-import ljy.misc.SpeedDateEditSuccessLinstener;
 import ljy.mrg.SqliteMrg;
 import ljy.utils.MyLog;
 import ljy.utils.ToastUtil;
@@ -37,16 +36,13 @@ public class CreateSpeedDataDialog extends Dialog {
         public EditText text_speed;
 
         public EditText text_time;
+        private int order;
         private SpeedData speedData;
-        private SpeedDateEditSuccessLinstener successLinstener;
-        public CreateSpeedDataDialog(Activity context, SpeedData speedData) {
+        public CreateSpeedDataDialog(Activity context, int order, SpeedData speedData) {
             super(context, 0);
             this.context = context;
+            this.order = order;
             this.speedData = speedData;
-        }
-        public CreateSpeedDataDialog(Activity context, SpeedData speedData, SpeedDateEditSuccessLinstener successLinstener) {
-            this(context, speedData);
-            this.successLinstener = successLinstener;
         }
 
         @Override
@@ -59,7 +55,7 @@ public class CreateSpeedDataDialog extends Dialog {
             text_speed = (EditText) findViewById(R.id.text_speed);
             text_time = (EditText) findViewById(R.id.text_time);
 
-            text_id.setText(""+speedData.getOrder());
+            text_id.setText(""+order);
             text_speed.setText(""+speedData.getSpeed());
             text_time.setText(speedData.getTime());
             /*
@@ -82,14 +78,11 @@ public class CreateSpeedDataDialog extends Dialog {
                 @Override
                 public void onClick(View v) {
                     try{
-                        speedData.setOrder(Integer.parseInt(text_id.getText().toString()));
+                        int dbOrder = Integer.parseInt(text_id.getText().toString());
                         speedData.setSpeed(Float.parseFloat(text_speed.getText().toString()));
                         speedData.setTime(text_time.getText().toString());
-                        boolean isSuccess = SqliteMrg.getInstance().save(speedData);
+                        boolean isSuccess = SqliteMrg.getInstance().save(dbOrder, speedData);
                         if(isSuccess){
-                            if(null!=successLinstener){
-                                successLinstener.onSuccess(speedData.getOrder());
-                            }
                             EventBus.getDefault().post(new SpeedDataBus(SpeedDataContant.ON_SPEED_DATA_SAVE));
                             ToastUtil.shortShow("保存成功！");
                             CreateSpeedDataDialog.this.cancel();

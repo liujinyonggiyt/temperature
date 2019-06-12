@@ -89,7 +89,7 @@ public class SpeedDataListActivity extends BaseActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     SpeedData speedData = speedDataList.get(position);
-                    CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(SpeedDataListActivity.this, speedData);
+                    CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(SpeedDataListActivity.this, position+1, speedData);
                     createSpeedDataDialog.show();
                 }
             });

@@ -1,7 +1,5 @@
 package ljy.mrg;
 
-import android.support.v4.util.Preconditions;
-
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
@@ -23,26 +21,34 @@ public class SqliteMrg {
     }
 
     private SqliteMrg(){
-        SpeedData speedData = findLast(SpeedData.class);
-        if(null == speedData){
-            SpeedData.setNextId(1);
-        }else{
-            SpeedData.setNextId(speedData.getOrder()+1);
+
+    }
+
+    public int getNextSpeedDataId(){
+        return count(SpeedData.class)+1;
+    }
+    public <T extends LitePalSupport> boolean save(int order, SpeedData speedData){
+        boolean isSuccess = false;
+        try{
+            if(order>=getNextSpeedDataId()){//插入
+                isSuccess = speedData.save();
+            }else{//替换
+                SpeedData oldData = findByOffset(SpeedData.class, order-1);
+                oldData.copyFrom(speedData);
+                isSuccess = oldData.save();
+            }
+        }catch (Exception e){
+            isSuccess = false;
+            MyLog.e(TAG, e.getMessage());
         }
+
+        return isSuccess;
     }
 
     public <T extends LitePalSupport> boolean save(T bean){
         boolean isSuccess = false;
         try{
             isSuccess = bean.save();
-            if(isSuccess){
-                if(bean instanceof SpeedData){
-                    SpeedData speedData = (SpeedData) bean;
-                    if(speedData.getOrder()>=SpeedData.getNextId()){
-                        SpeedData.setNextId(speedData.getOrder()+1);
-                    }
-                }
-            }
         }catch (Exception e){
             isSuccess = false;
             MyLog.e(TAG, e.getMessage());
@@ -62,6 +68,14 @@ public class SqliteMrg {
     public <T extends LitePalSupport> List<T> findByPage(Class<T> clazz, int page, int sizePerPage){
         assert page>0 && sizePerPage>0;
         return LitePal.limit(sizePerPage).offset((page-1)*sizePerPage).find(clazz);
+    }
+    public <T extends LitePalSupport> T findByOffset(Class<T> clazz, int offset){
+        List<T> list = LitePal.limit(1).offset(offset).find(clazz);
+        if(list.isEmpty()){
+            return null;
+        }else{
+            return list.get(0);
+        }
     }
 
     public <T extends LitePalSupport> int count(Class<T> clazz){

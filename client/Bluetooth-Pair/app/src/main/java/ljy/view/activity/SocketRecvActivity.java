@@ -181,8 +181,8 @@ public class SocketRecvActivity extends BaseActivity {
                         speed = Float.parseFloat(speedStr);
                     }
                     SpeedData speedData = new SpeedData(2, speed, SystemTimeMrg.getInstance().getCurTime());
-
-                    CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(SocketRecvActivity.this, speedData);
+                    int order = SqliteMrg.getInstance().getNextSpeedDataId();
+                    CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(SocketRecvActivity.this, order, speedData);
                     createSpeedDataDialog.show();
                     break;
                 }
