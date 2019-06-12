@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity {
             titlebar.setImmersive(true);
             titlebar.setTitleColor(Color.WHITE);
 
-            calendar.set(2019,5, 15, 0, 0);//20190615
+            calendar.set(2019,6, 15, 0, 0);//20190715
             MyLog.e(Tag, "过期时间："+calendar.getTime());
             if(System.currentTimeMillis()>=calendar.getTimeInMillis()){//过期
                 showOutdateDialog();
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket, R.id.buttion_go_qrcode, R.id.buttion_go_bind})
+    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket, R.id.buttion_go_qrcode, R.id.buttion_go_bind, R.id.buttion_go_look_speed})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -102,6 +102,11 @@ public class MainActivity extends BaseActivity {
                 }
                 case R.id.buttion_go_qrcode:{
                     Intent intent = new Intent(MainActivity.this, QrCodeActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.buttion_go_look_speed:{
+                    Intent intent = new Intent(MainActivity.this, SpeedDataListActivity.class);
                     startActivity(intent);
                     break;
                 }
