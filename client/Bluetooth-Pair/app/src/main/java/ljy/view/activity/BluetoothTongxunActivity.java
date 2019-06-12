@@ -1,5 +1,6 @@
 package ljy.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,17 +15,23 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.BlueMessageBean;
 import ljy.base.constant.BltContant;
 import ljy.bluetooth.R;
+import ljy.mapping.SpeedData;
+import ljy.mrg.SqliteMrg;
+import ljy.mrg.SystemTimeMrg;
 import ljy.service.ReceiveSocketService;
 import ljy.service.SendSocketService;
 import ljy.utils.MyLog;
 import ljy.utils.ToastUtil;
 import ljy.utils.factory.ThreadPoolProxyFactory;
+import ljy.view.dialog.CreateSpeedDataDialog;
 import ljy.widget.TitleBar;
 
 public class BluetoothTongxunActivity extends BaseActivity {
@@ -41,6 +48,18 @@ public class BluetoothTongxunActivity extends BaseActivity {
     Button goFileBtn;
     @BindView(R.id.text)
     TextView text;
+
+    /**
+     * 存储数据
+     */
+    @BindView(R.id.btn_save)
+    Button saveBtn;
+    /**
+     * 查看数据
+     */
+    @BindView(R.id.btn_look)
+    Button lookBtn;
+
 
     private final ReceiveSocketService receiveSocketService = new ReceiveSocketService();
     @Override
@@ -70,7 +89,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.go_text_btn, R.id.go_file_btn})
+    @OnClick({R.id.go_text_btn, R.id.go_file_btn, R.id.btn_save, R.id.btn_look})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go_text_btn:
@@ -84,6 +103,23 @@ public class BluetoothTongxunActivity extends BaseActivity {
             case R.id.go_file_btn:
                 SendSocketService.sendMessageByFile(Environment.getExternalStorageDirectory()+"/test.png");
                 break;
+            case R.id.btn_save:{//存储数据
+                String speedStr = text.getText().toString();
+                float speed = 0F;
+                if(!speedStr.isEmpty()){
+                    speed = Float.parseFloat(speedStr);
+                }
+                SpeedData speedData = new SpeedData(2, speed, SystemTimeMrg.getInstance().getCurTime());
+
+                CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(BluetoothTongxunActivity.this, speedData);
+                createSpeedDataDialog.show();
+                break;
+            }
+            case R.id.btn_look:{//查看数据
+                Intent intent = new Intent(BluetoothTongxunActivity.this, SpeedDataListActivity.class);
+                startActivity(intent);
+                break;
+            }
         }
     }
 

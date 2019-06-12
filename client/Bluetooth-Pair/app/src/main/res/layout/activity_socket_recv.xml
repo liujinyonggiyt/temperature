@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ljy.view.activity.BluetoothListActivity">
+    tools:context="ljy.view.activity.SocketRecvActivity">
 
     <ljy.widget.TitleBar
         android:id="@+id/titlebar"
@@ -67,5 +67,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="存储数据" />
+        <Button
+            android:id="@+id/btn_look"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="查看数据" />
     </LinearLayout>
 </LinearLayout>

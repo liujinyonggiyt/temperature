@@ -3,7 +3,6 @@ package ljy;
 import android.app.Application;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -11,7 +10,9 @@ import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.readystatesoftware.notificationlog.Log;
 
-import ljy.bluetooth.BuildConfig;
+import org.litepal.LitePal;
+
+import ljy.mrg.SqliteMrg;
 import ljy.utils.MyLog;
 
 
@@ -25,6 +26,9 @@ public class APP extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        LitePal.initialize(context);//初始化sqlite ORM
+
+        SqliteMrg.getInstance();
 
 //        if(BuildConfig.DEBUG){
             Log.initialize(context);

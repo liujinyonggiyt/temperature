@@ -1,5 +1,6 @@
 package ljy.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,11 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,12 +30,16 @@ import io.netty.buffer.Unpooled;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.SocketMessageBean;
 import ljy.bluetooth.R;
+import ljy.mapping.SpeedData;
+import ljy.mrg.SqliteMrg;
+import ljy.mrg.SystemTimeMrg;
 import ljy.msg.ByteStringRequest;
 import ljy.msg.RequestMsg;
 import ljy.msg.ServerResponse;
 import ljy.net.AbsConnectServer;
 import ljy.net.NettyConnectServer;
 import ljy.utils.MyLog;
+import ljy.view.dialog.CreateSpeedDataDialog;
 import ljy.widget.TitleBar;
 
 import static ljy.base.bean.SocketMessageBean.ON_RECEIVE_MSG;
@@ -56,6 +65,17 @@ public class SocketRecvActivity extends BaseActivity {
 
     @BindView(R.id.serverMsg)
     TextView msgReceive;
+
+    /**
+     * 存储数据
+     */
+    @BindView(R.id.btn_save)
+    Button saveBtn;
+    /**
+     * 查看数据
+     */
+    @BindView(R.id.btn_look)
+    Button lookBtn;
 
     /**
      * 服务器连接
@@ -88,7 +108,7 @@ public class SocketRecvActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_connet_server, R.id.text_send_btn})
+    @OnClick({R.id.buttion_connet_server, R.id.text_send_btn, R.id.btn_save, R.id.btn_look})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -152,6 +172,23 @@ public class SocketRecvActivity extends BaseActivity {
                     ByteBuf serverResponse = Unpooled.buffer(msg.length());
                     serverResponse.writeBytes(msg.getBytes());
                     connectServer.sendMsg(serverResponse);
+                    break;
+                }
+                case R.id.btn_save:{//存储数据
+                    String speedStr = msgReceive.getText().toString();
+                    float speed = 0F;
+                    if(!speedStr.isEmpty()){
+                        speed = Float.parseFloat(speedStr);
+                    }
+                    SpeedData speedData = new SpeedData(2, speed, SystemTimeMrg.getInstance().getCurTime());
+
+                    CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(SocketRecvActivity.this, speedData);
+                    createSpeedDataDialog.show();
+                    break;
+                }
+                case R.id.btn_look:{//查看数据
+                    Intent intent = new Intent(SocketRecvActivity.this, SpeedDataListActivity.class);
+                    startActivity(intent);
                     break;
                 }
                 default:break;

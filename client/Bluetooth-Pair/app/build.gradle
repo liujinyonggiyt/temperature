@@ -47,4 +47,5 @@ dependencies {
     implementation files('libs/notificationlog-0.1.0.jar')
     compile 'io.netty:netty-all:4.1.36.Final'
     implementation project(':zxing-lib')
+    compile 'org.litepal.android:core:2.0.0' //sqlite ORM
 }

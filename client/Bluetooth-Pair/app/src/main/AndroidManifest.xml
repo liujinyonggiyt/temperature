@@ -35,8 +35,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 摄像头权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 自动聚焦权限 -->
 
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- 自动聚焦权限 -->
     <application
         android:name="ljy.APP"
         android:allowBackup="true"
@@ -45,7 +47,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="ljy.view.activity.BluetoothListActivity"/>
+        <activity android:name="ljy.view.activity.BluetoothListActivity" />
         <activity android:name="ljy.view.activity.BluetoothTongxunActivity" />
         <activity
             android:name="com.readystatesoftware.notificationlog.LogActivity"
@@ -58,11 +60,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ljy.view.activity.SocketRecvActivity"></activity>
-        <!--二维码-->
-        <activity android:name="ljy.view.activity.QrCodeActivity"></activity>
-        <activity android:name="com.google.zxing.activity.CaptureActivity"></activity>
-        <activity android:name="ljy.view.activity.BindActivity"></activity>
+        <activity android:name="ljy.view.activity.SocketRecvActivity" />
+        <!-- 二维码 -->
+        <activity android:name="ljy.view.activity.QrCodeActivity" />
+        <activity android:name="com.google.zxing.activity.CaptureActivity" />
+        <activity android:name="ljy.view.activity.BindActivity" />
+        <activity android:name="ljy.view.activity.SpeedDataListActivity"></activity>
     </application>
 
 </manifest>
