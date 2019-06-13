@@ -33,7 +33,6 @@ public class SpeedDataItemAdapter extends ArrayAdapter<SpeedData> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SpeedData speedData = getItem(position);
         View view;
         ViewHolder viewHolder;
         if(convertView == null){
@@ -44,6 +43,7 @@ public class SpeedDataItemAdapter extends ArrayAdapter<SpeedData> {
                 @Override
                 public void onClick(View v) {
                     CheckBox checkBox = (CheckBox) v;
+                    SpeedData speedData = (SpeedData) checkBox.getTag();
                     EventBus.getDefault().post(new SpeedDataBus(SpeedDataContant.ON_SPEED_LIST_ITEM_CHECKED, speedData, checkBox.isChecked()));
                 }
             });
@@ -56,7 +56,9 @@ public class SpeedDataItemAdapter extends ArrayAdapter<SpeedData> {
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
+        SpeedData speedData = getItem(position);
         viewHolder.checkBox.setChecked(speedData.checked);
+        viewHolder.checkBox.setTag(speedData);
         viewHolder.order.setText("序号："+(position+1)+"， ");
         viewHolder.speed.setText("速度："+speedData.getSpeed()+"M/s， ");
         viewHolder.time.setText("时间："+speedData.getTime());

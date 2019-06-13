@@ -56,7 +56,7 @@ public class SpeedDataListActivity extends BaseActivity {
     private List<SpeedData> speedDataList = new ArrayList<>();
     SpeedDataItemAdapter adapter;
     View footer;//获取“正在加载数据”的显示字样，要在new出适配器之前进行显示
-    private final int sizePerPage = 20;
+    private final int sizePerPage = 100;
     private int maxPage;
     private boolean loadFinish = true;
 
@@ -100,15 +100,13 @@ public class SpeedDataListActivity extends BaseActivity {
 
             textView_xuanze.setText("已选中"+num_xuanze+"项");
 
-            rizhi_textView_shanchu.setOnClickListener(new View.OnClickListener() {
+            rizhi_textView_shanchu.setOnClickListener(new View.OnClickListener() {//删除
                 @Override
                 public void onClick(View v) {
-                    ArrayList<SpeedData> delitem=new ArrayList<SpeedData>();
                     for(Iterator<SpeedData> iter = speedDataList.iterator();iter.hasNext();){
                         SpeedData speedData = iter.next();
                         if(speedData.checked){
                             iter.remove();//从缓存中删除
-                            delitem.add(speedData);
                             speedData.delete();
                         }
                     }
@@ -119,7 +117,7 @@ public class SpeedDataListActivity extends BaseActivity {
                 }
             });
 
-           textView_quxiao.setOnClickListener(new View.OnClickListener() {
+           textView_quxiao.setOnClickListener(new View.OnClickListener() {//取消
                @Override
                public void onClick(View v) {
                    for(int i=0;i<speedDataList.size();i++){
