@@ -35,13 +35,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_save"
+            android:id="@+id/btn_blue_save_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="存储数据" />
         <Button
-            android:id="@+id/btn_look"
+            android:id="@+id/btn_blue_look_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

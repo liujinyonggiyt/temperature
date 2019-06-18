@@ -16,16 +16,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.SocketMessageBean;
@@ -69,12 +63,12 @@ public class SocketRecvActivity extends BaseActivity {
     /**
      * 存储数据
      */
-    @BindView(R.id.btn_save)
+    @BindView(R.id.btn_socket_save_panel)
     Button saveBtn;
     /**
      * 查看数据
      */
-    @BindView(R.id.btn_look)
+    @BindView(R.id.btn_socket_look_panel)
     Button lookBtn;
 
     /**
@@ -108,7 +102,7 @@ public class SocketRecvActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_connet_server, R.id.text_send_btn, R.id.btn_save, R.id.btn_look})
+    @OnClick({R.id.buttion_connet_server, R.id.text_send_btn, R.id.btn_socket_save_panel, R.id.btn_socket_look_panel})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -174,7 +168,7 @@ public class SocketRecvActivity extends BaseActivity {
                     connectServer.sendMsg(serverResponse);
                     break;
                 }
-                case R.id.btn_save:{//存储数据
+                case R.id.btn_socket_save_panel:{//存储数据
                     String speedStr = msgReceive.getText().toString();
                     float speed = 0F;
                     if(!speedStr.isEmpty()){
@@ -186,7 +180,7 @@ public class SocketRecvActivity extends BaseActivity {
                     createSpeedDataDialog.show();
                     break;
                 }
-                case R.id.btn_look:{//查看数据
+                case R.id.btn_socket_look_panel:{//查看数据
                     Intent intent = new Intent(SocketRecvActivity.this, SpeedDataListActivity.class);
                     startActivity(intent);
                     break;

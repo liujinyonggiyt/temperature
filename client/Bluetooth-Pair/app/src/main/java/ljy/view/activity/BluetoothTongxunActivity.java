@@ -15,8 +15,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import ljy.base.activity.BaseActivity;
@@ -52,12 +50,12 @@ public class BluetoothTongxunActivity extends BaseActivity {
     /**
      * 存储数据
      */
-    @BindView(R.id.btn_save)
+    @BindView(R.id.btn_blue_save_panel)
     Button saveBtn;
     /**
      * 查看数据
      */
-    @BindView(R.id.btn_look)
+    @BindView(R.id.btn_blue_look_panel)
     Button lookBtn;
 
 
@@ -89,7 +87,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.go_text_btn, R.id.go_file_btn, R.id.btn_save, R.id.btn_look})
+    @OnClick({R.id.go_text_btn, R.id.go_file_btn, R.id.btn_blue_save_panel, R.id.btn_blue_look_panel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go_text_btn:
@@ -103,7 +101,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
             case R.id.go_file_btn:
                 SendSocketService.sendMessageByFile(Environment.getExternalStorageDirectory()+"/test.png");
                 break;
-            case R.id.btn_save:{//存储数据
+            case R.id.btn_blue_save_panel:{//存储数据
                 String speedStr = text.getText().toString();
                 float speed = 0F;
                 if(!speedStr.isEmpty()){
@@ -115,7 +113,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
                 createSpeedDataDialog.show();
                 break;
             }
-            case R.id.btn_look:{//查看数据
+            case R.id.btn_blue_look_panel:{//查看数据
                 Intent intent = new Intent(BluetoothTongxunActivity.this, SpeedDataListActivity.class);
                 startActivity(intent);
                 break;
@@ -144,7 +142,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
             case ReceiveSocketService.RECEIVER_MESSAGE:
 //                MyLog.d("收到消息", blueMessageBean.getContent());
 //                text.append("收到消息:" + blueMessageBean.getContent() + "\n");
-                text.setText("当前速度:"+blueMessageBean.getContent()+"M/s");
+                text.setText("当前速度:"+blueMessageBean.getContent()+"m/s");
                 break;
             case BltContant.SEND_TEXT_SUCCESS:
                 text.append("我:" + goEditText.getText().toString() + "\n");

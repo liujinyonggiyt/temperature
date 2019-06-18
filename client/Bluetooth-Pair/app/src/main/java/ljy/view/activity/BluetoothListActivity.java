@@ -43,10 +43,14 @@ import ljy.base.bean.BluRxBean;
 import ljy.base.constant.BltContant;
 import ljy.base.manger.BltManager;
 import ljy.bluetooth.R;
+import ljy.mapping.SpeedData;
+import ljy.mrg.SqliteMrg;
+import ljy.mrg.SystemTimeMrg;
 import ljy.receivers.BlueToothReceiver;
 import ljy.service.BltService;
 import ljy.utils.MyLog;
 import ljy.utils.factory.ThreadPoolProxyFactory;
+import ljy.view.dialog.CreateSpeedDataDialog;
 import ljy.widget.TitleBar;
 import recycleview.huanglinqing.com.dialogutils.DialogUtils;
 
@@ -71,6 +75,7 @@ public class BluetoothListActivity extends BaseActivity {
     ListView listview;
     @BindView(R.id.titlebar)
     TitleBar titlebar;
+
 
     private BluetoothManager bluetoothmanger;
     private BluetoothAdapter bluetoothadapter;
