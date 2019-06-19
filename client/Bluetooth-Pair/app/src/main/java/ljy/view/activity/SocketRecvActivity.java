@@ -23,6 +23,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.SocketMessageBean;
+import ljy.base.constant.SpeedDataContant;
 import ljy.bluetooth.R;
 import ljy.mapping.SpeedData;
 import ljy.mrg.SqliteMrg;
@@ -169,7 +170,7 @@ public class SocketRecvActivity extends BaseActivity {
                     break;
                 }
                 case R.id.btn_socket_save_panel:{//存储数据
-                    String speedStr = msgReceive.getText().toString();
+                    String speedStr = msgReceive.getText().toString().replace(SpeedDataContant.SPEED_UNIT, "").trim();
                     float speed = 0F;
                     if(!speedStr.isEmpty()){
                         speed = Float.parseFloat(speedStr);
@@ -215,7 +216,7 @@ public class SocketRecvActivity extends BaseActivity {
 //                }
 
                 String msg = new String(requestMsg.getBytes(), "UTF-8");
-                msgReceive.setText(msg+"M/s");
+                msgReceive.setText(msg+SpeedDataContant.SPEED_UNIT);
             }
             default:
                 break;

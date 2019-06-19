@@ -144,7 +144,9 @@ public class NettyConnectServer extends AbsConnectServer {
 
     @Override
     public void sendMsg(ByteBuf serverResponse) {
-        socketChannel.writeAndFlush(serverResponse);
+        if(null!=socketChannel) {
+            socketChannel.writeAndFlush(serverResponse);
+        }
     }
 
     @Override

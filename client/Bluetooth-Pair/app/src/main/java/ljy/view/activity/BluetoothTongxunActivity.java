@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.BlueMessageBean;
 import ljy.base.constant.BltContant;
+import ljy.base.constant.SpeedDataContant;
 import ljy.bluetooth.R;
 import ljy.mapping.SpeedData;
 import ljy.mrg.SqliteMrg;
@@ -102,7 +103,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
                 SendSocketService.sendMessageByFile(Environment.getExternalStorageDirectory()+"/test.png");
                 break;
             case R.id.btn_blue_save_panel:{//存储数据
-                String speedStr = text.getText().toString();
+                String speedStr = text.getText().toString().replace(SpeedDataContant.SPEED_UNIT, "").trim();
                 float speed = 0F;
                 if(!speedStr.isEmpty()){
                     speed = Float.parseFloat(speedStr);
@@ -142,7 +143,7 @@ public class BluetoothTongxunActivity extends BaseActivity {
             case ReceiveSocketService.RECEIVER_MESSAGE:
 //                MyLog.d("收到消息", blueMessageBean.getContent());
 //                text.append("收到消息:" + blueMessageBean.getContent() + "\n");
-                text.setText("当前速度:"+blueMessageBean.getContent()+"m/s");
+                text.setText("当前速度:"+blueMessageBean.getContent()+SpeedDataContant.SPEED_UNIT);
                 break;
             case BltContant.SEND_TEXT_SUCCESS:
                 text.append("我:" + goEditText.getText().toString() + "\n");
