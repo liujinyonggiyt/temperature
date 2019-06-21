@@ -15,4 +15,8 @@ public interface SpeedDataContant {
      * 当速度信息被编辑存储入库成功
      */
     int ON_SPEED_DATA_SAVE=2;
+    /**
+     * 计算-选择一项
+     */
+    int ON_SELECT_SPEED_DATA = 3;
 }

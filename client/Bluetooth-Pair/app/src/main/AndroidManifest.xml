@@ -65,7 +65,8 @@
         <activity android:name="ljy.view.activity.QrCodeActivity" />
         <activity android:name="com.google.zxing.activity.CaptureActivity" />
         <activity android:name="ljy.view.activity.BindActivity" />
-        <activity android:name="ljy.view.activity.SpeedDataListActivity"></activity>
+        <activity android:name="ljy.view.activity.SpeedDataListActivity" />
+        <activity android:name="ljy.view.activity.CalculateActivity"></activity>
     </application>
 
 </manifest>

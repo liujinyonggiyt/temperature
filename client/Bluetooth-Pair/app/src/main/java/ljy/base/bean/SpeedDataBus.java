@@ -9,6 +9,7 @@ public class SpeedDataBus {
      * checkbox是否选中
      */
     private boolean checked;
+
     public SpeedDataBus(int id) {
         this.id = id;
     }
@@ -42,4 +43,5 @@ public class SpeedDataBus {
     public void setChecked(boolean checked) {
         this.checked = checked;
     }
+
 }

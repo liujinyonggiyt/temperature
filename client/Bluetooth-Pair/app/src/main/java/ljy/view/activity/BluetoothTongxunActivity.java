@@ -90,35 +90,39 @@ public class BluetoothTongxunActivity extends BaseActivity {
 
     @OnClick({R.id.go_text_btn, R.id.go_file_btn, R.id.btn_blue_save_panel, R.id.btn_blue_look_panel})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.go_text_btn:
-                //发送文字消息
-                if (TextUtils.isEmpty(goEditText.getText().toString())) {
-                    ToastUtil.shortShow("请先输入信息");
-                } else {
-                    SendSocketService.sendMessage(goEditText.getText().toString());
+        try{
+            switch (view.getId()) {
+                case R.id.go_text_btn:
+                    //发送文字消息
+                    if (TextUtils.isEmpty(goEditText.getText().toString())) {
+                        ToastUtil.shortShow("请先输入信息");
+                    } else {
+                        SendSocketService.sendMessage(goEditText.getText().toString());
+                    }
+                    break;
+                case R.id.go_file_btn:
+                    SendSocketService.sendMessageByFile(Environment.getExternalStorageDirectory()+"/test.png");
+                    break;
+                case R.id.btn_blue_save_panel:{//存储数据
+                    String speedStr = text.getText().toString().replace(SpeedDataContant.SPEED_UNIT, "").trim();
+                    float speed = 0F;
+                    if(!speedStr.isEmpty()){
+                        speed = Float.parseFloat(speedStr);
+                    }
+                    SpeedData speedData = new SpeedData(2, speed, SystemTimeMrg.getInstance().getCurTime());
+                    int order = SqliteMrg.getInstance().getNextSpeedDataId();
+                    CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(BluetoothTongxunActivity.this, order, speedData);
+                    createSpeedDataDialog.show();
+                    break;
                 }
-                break;
-            case R.id.go_file_btn:
-                SendSocketService.sendMessageByFile(Environment.getExternalStorageDirectory()+"/test.png");
-                break;
-            case R.id.btn_blue_save_panel:{//存储数据
-                String speedStr = text.getText().toString().replace(SpeedDataContant.SPEED_UNIT, "").trim();
-                float speed = 0F;
-                if(!speedStr.isEmpty()){
-                    speed = Float.parseFloat(speedStr);
+                case R.id.btn_blue_look_panel:{//查看数据
+                    Intent intent = new Intent(BluetoothTongxunActivity.this, SpeedDataListActivity.class);
+                    startActivity(intent);
+                    break;
                 }
-                SpeedData speedData = new SpeedData(2, speed, SystemTimeMrg.getInstance().getCurTime());
-                int order = SqliteMrg.getInstance().getNextSpeedDataId();
-                CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(BluetoothTongxunActivity.this, order, speedData);
-                createSpeedDataDialog.show();
-                break;
             }
-            case R.id.btn_blue_look_panel:{//查看数据
-                Intent intent = new Intent(BluetoothTongxunActivity.this, SpeedDataListActivity.class);
-                startActivity(intent);
-                break;
-            }
+        }catch (Exception e){
+            MyLog.e(Tag, e.getMessage(), e);
         }
     }
 
@@ -139,24 +143,28 @@ public class BluetoothTongxunActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BlueMessageBean blueMessageBean) {
-        switch (blueMessageBean.getId()) {
-            case ReceiveSocketService.RECEIVER_MESSAGE:
+        try{
+            switch (blueMessageBean.getId()) {
+                case ReceiveSocketService.RECEIVER_MESSAGE:
 //                MyLog.d("收到消息", blueMessageBean.getContent());
 //                text.append("收到消息:" + blueMessageBean.getContent() + "\n");
-                text.setText("当前速度:"+blueMessageBean.getContent()+SpeedDataContant.SPEED_UNIT);
-                break;
-            case BltContant.SEND_TEXT_SUCCESS:
-                text.append("我:" + goEditText.getText().toString() + "\n");
-                goEditText.setText("");
-                break;
-            case BltContant.SEND_FILE_NOTEXIT:
-                ToastUtil.shortShow("发送的文件不存在，内存根目录下的test.png");
-                break;
-            case BltContant.SEND_FILE_IS_FOLDER:
-                ToastUtil.shortShow("不能传送一个文件夹");
-                break;
-            default:
-                break;
+                    text.setText(blueMessageBean.getContent()+SpeedDataContant.SPEED_UNIT);
+                    break;
+                case BltContant.SEND_TEXT_SUCCESS:
+                    text.append("我:" + goEditText.getText().toString() + "\n");
+                    goEditText.setText("");
+                    break;
+                case BltContant.SEND_FILE_NOTEXIT:
+                    ToastUtil.shortShow("发送的文件不存在，内存根目录下的test.png");
+                    break;
+                case BltContant.SEND_FILE_IS_FOLDER:
+                    ToastUtil.shortShow("不能传送一个文件夹");
+                    break;
+                default:
+                    break;
+            }
+        }catch (Exception e){
+            MyLog.e(Tag, e.getMessage(), e);
         }
     }
 }

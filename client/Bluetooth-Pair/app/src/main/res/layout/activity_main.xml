@@ -26,6 +26,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        android:id="@+id/buttion_go_cal"
+        android:text="计算"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
         android:id="@+id/buttion_go_bind"
         android:text="打开设备绑定菜单"
         android:layout_width="wrap_content"

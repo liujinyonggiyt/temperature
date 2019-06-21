@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket, R.id.buttion_go_qrcode, R.id.buttion_go_bind, R.id.buttion_go_look_speed})
+    @OnClick({R.id.buttion_go_blue, R.id.buttion_go_socket, R.id.buttion_go_qrcode, R.id.buttion_go_bind, R.id.buttion_go_look_speed, R.id.buttion_go_cal})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -107,6 +107,11 @@ public class MainActivity extends BaseActivity {
                 }
                 case R.id.buttion_go_look_speed:{
                     Intent intent = new Intent(MainActivity.this, SpeedDataListActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.buttion_go_cal:{//计算
+                    Intent intent = new Intent(MainActivity.this, CalculateActivity.class);
                     startActivity(intent);
                     break;
                 }
