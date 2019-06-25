@@ -95,7 +95,8 @@ public class CalculateActivity extends BaseActivity {
 //                        float speed1 = 0;
                         BigDecimal speed1 = new BigDecimal(0);
                         if(i==1){//第一个，最后一个速度为0
-
+                            setSpeedText(tableRow1, "0");
+                            setDefaultDianText(tableRow1);
                         }else{
 //                            speed1 = getSpeed(tableRow1);//速度
                             speed1 = getSpeedBigDecimal(tableRow1);
@@ -103,7 +104,8 @@ public class CalculateActivity extends BaseActivity {
 //                        float speed2 = 0;
                         BigDecimal speed2 = new BigDecimal(0);
                         if(i==len-1){//第一个，最后一个速度为0
-
+                            setSpeedText(tableRow2, "0");
+                            setDefaultDianText(tableRow2);
                         }else{
 //                            speed2 = getSpeed(tableRow2);//速度
                             speed2 = getSpeedBigDecimal(tableRow2);
@@ -204,6 +206,7 @@ public class CalculateActivity extends BaseActivity {
                         setBeginDistance(tableRow, ""+getInitBeginDiatance(line));
                         setWaterDeep(tableRow, ""+getInitWaterDeep(line));
                     }
+                    break;
                 }
             }
         }catch (Exception e){
@@ -291,12 +294,24 @@ public class CalculateActivity extends BaseActivity {
         TableRow tableRow = new TableRow(CalculateActivity.this);
 
         TextView delete = new TextView(CalculateActivity.this);//删除
-        delete.setText("删除");
+        delete.setText("删");
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tablelayout_cal.removeView(tableRow);
                 resetRowNumber();//重置序号
+                //第一行，最后一行速度置零
+                if(tablelayout_cal.getChildCount()>1){
+                    TableRow firstRow = (TableRow) tablelayout_cal.getChildAt(1);
+                    setDefaultDianText(firstRow);
+                    setSpeedText(firstRow, "0");
+                }
+                if(tablelayout_cal.getChildCount()>2){
+                    TableRow lastRow = (TableRow) tablelayout_cal.getChildAt(tablelayout_cal.getChildCount()-1);
+                    setDefaultDianText(lastRow);
+                    setSpeedText(lastRow, "0");
+                }
+
             }
         });
         tableRow.addView(delete);
@@ -369,6 +384,10 @@ public class CalculateActivity extends BaseActivity {
     private void setDianText(TableRow tableRow, String text){
         TextView dian = (TextView) tableRow.getChildAt(2);//点号
         dian.setText(text);
+    }
+    private void setDefaultDianText(TableRow tableRow){
+        TextView dian = (TextView) tableRow.getChildAt(2);//点号
+        dian.setText(".");
     }
     private void setSpeedText(TableRow tableRow, String text){
         EditText speed = (EditText) tableRow.getChildAt(3);//速度

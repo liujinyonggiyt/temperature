@@ -1,44 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ljy.view.activity.BluetoothListActivity">
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
 
-    <ljy.widget.TitleBar
-        android:id="@+id/titlebar"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ljy.widget.TitleBar>
-    <Button
-        android:id="@+id/buttion_go_blue"
-        android:text="@string/main_bluetooth_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/buttion_go_socket"
-        android:text="@string/main_socket_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/buttion_go_look_speed"
-        android:text="查看历史数据"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/buttion_go_cal"
-        android:text="计算"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/buttion_go_bind"
-        android:text="打开设备绑定菜单"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/buttion_go_qrcode"
-        android:text="打开二维码菜单"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="ljy.view.activity.BluetoothListActivity">
 
-</LinearLayout>
+        <ljy.widget.TitleBar
+            android:id="@+id/titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ljy.widget.TitleBar>
+
+        <Button
+            android:id="@+id/buttion_go_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_bluetooth_menu" />
+
+        <Button
+            android:id="@+id/buttion_go_socket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_socket_menu" />
+
+        <Button
+            android:id="@+id/buttion_go_look_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看历史数据" />
+
+        <Button
+            android:id="@+id/buttion_go_cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="计算" />
+
+        <!--打开设备绑定菜单-->
+        <Button
+            android:id="@+id/buttion_go_bind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="物联网云智联" />
+
+        <Button
+            android:id="@+id/buttion_go_qrcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打开二维码菜单" />
+
+    </LinearLayout>
+</ScrollView>

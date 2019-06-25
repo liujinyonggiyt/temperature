@@ -1,5 +1,6 @@
 package ljy.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,13 +23,18 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import ljy.base.activity.BaseActivity;
 import ljy.base.bean.SocketMessageBean;
+import ljy.base.constant.SpeedDataContant;
 import ljy.bluetooth.R;
+import ljy.mapping.SpeedData;
+import ljy.mrg.SqliteMrg;
+import ljy.mrg.SystemTimeMrg;
 import ljy.msg.ByteStringRequest;
 import ljy.msg.RequestMsg;
 import ljy.msg.ServerResponse;
 import ljy.net.AbsConnectServer;
 import ljy.net.NettyConnectServer;
 import ljy.utils.MyLog;
+import ljy.view.dialog.CreateSpeedDataDialog;
 import ljy.widget.TitleBar;
 
 import static ljy.base.bean.SocketMessageBean.ON_RECEIVE_MSG;
@@ -90,7 +96,7 @@ public class BindActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.buttion_connet_server, R.id.buttion_bind})
+    @OnClick({R.id.buttion_connet_server, R.id.buttion_bind,  R.id.btn_bind_save_panel, R.id.btn_bind_look_panel})
     public void onViewClicked(View view) {
         try {
             switch (view.getId()) {
@@ -154,6 +160,23 @@ public class BindActivity extends BaseActivity {
                     connectServer.sendMsg(serverResponse);
                     break;
                 }
+                case R.id.btn_bind_save_panel:{//存储数据
+                    String speedStr = msgReceive.getText().toString().replace(SpeedDataContant.SPEED_UNIT, "").trim();
+                    float speed = 0F;
+                    if(!speedStr.isEmpty()){
+                        speed = Float.parseFloat(speedStr);
+                    }
+                    SpeedData speedData = new SpeedData(2, speed, SystemTimeMrg.getInstance().getCurTime());
+                    int order = SqliteMrg.getInstance().getNextSpeedDataId();
+                    CreateSpeedDataDialog createSpeedDataDialog = new CreateSpeedDataDialog(BindActivity.this, order, speedData);
+                    createSpeedDataDialog.show();
+                    break;
+                }
+                case R.id.btn_bind_look_panel:{//查看数据
+                    Intent intent = new Intent(BindActivity.this, SpeedDataListActivity.class);
+                    startActivity(intent);
+                    break;
+                }
                 default:break;
             }
         }catch (Exception e){
@@ -206,7 +229,7 @@ public class BindActivity extends BaseActivity {
                     socket_bind_ipText.setVisibility(View.VISIBLE);
                     bindButton.setVisibility(View.VISIBLE);
                 }else{
-                    msgReceive.setText(msg+"M/s");
+                    msgReceive.setText(msg+SpeedDataContant.SPEED_UNIT);
                 }
 
             }

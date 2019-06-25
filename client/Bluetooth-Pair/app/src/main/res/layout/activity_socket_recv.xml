@@ -1,90 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ljy.view.activity.SocketRecvActivity">
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
 
-    <ljy.widget.TitleBar
-        android:id="@+id/titlebar"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ljy.widget.TitleBar>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="ljy.view.activity.SocketRecvActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        <ljy.widget.TitleBar
+            android:id="@+id/titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ljy.widget.TitleBar>
 
-        <EditText
-            android:id="@+id/socket_ip"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/input_ip"
-            />
-        <EditText
-            android:id="@+id/socket_port"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/socket_ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_ip" />
+
+            <EditText
+                android:id="@+id/socket_port"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_port" />
+
+            <Button
+                android:id="@+id/buttion_connet_server"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/connect_server" />
+
+            <TextView
+                android:id="@+id/connectStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/input_port"
-            />
-        <Button
-            android:id="@+id/buttion_connet_server"
-            android:text="@string/connect_server"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/connectStat"
+            <EditText
+                android:id="@+id/tosend_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_send_server" />
+
+            <Button
+                android:id="@+id/text_send_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_send" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前速度：" />
+
+            <TextView
+                android:id="@+id/serverMsg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/btn_socket_save_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="存储数据" />
+
+            <Button
+                android:id="@+id/btn_socket_look_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="查看数据" />
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/tosend_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/input_send_server"
-            />
-
-        <Button
-            android:id="@+id/text_send_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_send" />
-
-        <TextView
-            android:text="当前速度："
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/serverMsg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_socket_save_panel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="存储数据" />
-        <Button
-            android:id="@+id/btn_socket_look_panel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="查看数据" />
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>
