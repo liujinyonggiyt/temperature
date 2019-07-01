@@ -33,7 +33,7 @@ public class CalculateActivity extends BaseActivity {
     /**
      * 计算过程中保留几位小数
      */
-    private static final int DOT_NUMBER=3;
+    private static final int DOT_NUMBER=2;
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.tablelayout_cal)
@@ -144,43 +144,49 @@ public class CalculateActivity extends BaseActivity {
                         BigDecimal deep2 = getWaterDeepBigDecimal(tableRow2);
                         System.out.println("---------------------第"+i+"个部分");
                         //垂线平均
-                        BigDecimal chuixianAvg1  =  BigDecimal.valueOf(0.9).multiply(speed1).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                        BigDecimal chuixianAvg1  =  BigDecimal.valueOf(0.9).multiply(speed1).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
 //                        float  chuixianAvg1 = 0.9F*speed1;
                         System.out.println("chuixianAvg1="+chuixianAvg1);
 //                        BigDecimal b2  =  BigDecimal.valueOf(0.9*speed2);
-                        BigDecimal chuixianAvg2  =  BigDecimal.valueOf(0.9).multiply(speed2).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                        BigDecimal chuixianAvg2  =  BigDecimal.valueOf(0.9).multiply(speed2).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
 //                        float  chuixianAvg2 = 0.9F*speed2;
                         System.out.println("chuixianAvg2="+chuixianAvg2);
                         //平均流速
-                        BigDecimal speedAvg = speed1.add(speed2).divide(BigDecimal.valueOf(2)).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                        BigDecimal speedAvg = speed1.add(speed2).divide(BigDecimal.valueOf(2)).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
 //                        float speedAvg = (speed1+speed2)/2;
                         System.out.println("speedAvg="+speedAvg);
                         //平均水深
-                        BigDecimal deepAvg = deep1.add(deep2).divide(BigDecimal.valueOf(2)).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                        BigDecimal deepAvg = deep1.add(deep2).divide(BigDecimal.valueOf(2)).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
 //                        float deepAvg = (deep1+deep2)/2;
                         System.out.println("deepAvg:"+deepAvg);
                         //间距
-                        BigDecimal distance = beginDistance2.subtract(beginDistance1).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP).abs();
+                        BigDecimal distance = beginDistance2.subtract(beginDistance1).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN).abs();
 //                        float distance = Math.abs(beginDistance2-beginDistance1);
                         System.out.println("distance:"+distance);
                         //部分
-                        BigDecimal part =deepAvg.multiply(distance).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                        BigDecimal part =deepAvg.multiply(distance).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
 //                        float part = deepAvg*distance;
                         System.out.println("part："+part);
                         //部分平均（第一部分=第二个垂线平均*岸边系数；最后一部分=倒数第二个垂线平均*岸边系数）;中间的部分=（前一个垂线平均+后一个垂线平均）/2
                         BigDecimal partAvg;
                         if(i==1){//第一部分
-                            partAvg = chuixianAvg2.multiply(anbian).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                            partAvg = chuixianAvg2.multiply(anbian).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
 //                            partAvg =chuixianAvg2*anbian;
                         }else if(i == len-1){//最后一部分
-                            partAvg = chuixianAvg1.multiply(anbian).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                            partAvg = chuixianAvg1.multiply(anbian).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
 //                            partAvg = chuixianAvg1*anbian;
                         }else{//中间部分
-                            partAvg = chuixianAvg1.add(chuixianAvg1).divide(BigDecimal.valueOf(2)).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
-//                            partAvg = (chuixianAvg1+chuixianAvg1)/2;
+                            partAvg = chuixianAvg1.add(chuixianAvg2).divide(BigDecimal.valueOf(2)).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
+//                            partAvg = (chuixianAvg1+chuixianAvg2)/2;
                         }
                         System.out.println("partAvg："+partAvg);
-                        BigDecimal partFlow = partAvg.multiply(part).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_UP);
+                        //部分流量
+                        BigDecimal partFlow ;
+                        if(i == 1 || i == len-1){
+                            partFlow = partAvg.multiply(part).setScale(DOT_NUMBER+1,  BigDecimal.ROUND_HALF_EVEN);
+                        }else{
+                            partFlow = partAvg.multiply(part).setScale(DOT_NUMBER,  BigDecimal.ROUND_HALF_EVEN);
+                        }
 //                        float partFlow = partAvg*part;
                         System.out.println("partFlow："+partFlow);
 //                        totalFlow+=partFlow;
@@ -221,16 +227,16 @@ public class CalculateActivity extends BaseActivity {
             return 0.35F;
         }
         if(3==line){
-            return 0.54F;
+            return 0.51F;
         }
         if(4==line){
-            return 0.56F;
+            return 0.54F;
         }
         if(5==line){
-            return 0.36F;
+            return 0.30F;
         }
         if(6==line){
-            return 0.33F;
+            return 0.32F;
         }
         if(7==line){
             return 0F;
@@ -267,19 +273,19 @@ public class CalculateActivity extends BaseActivity {
             return 0F;
         }
         if(2==line){
-            return 0.95F;
+            return 1.02F;
         }
         if(3==line){
-            return 1.19F;
+            return 1.28F;
         }
         if(4==line){
-            return 1.32F;
+            return 1.35F;
         }
         if(5==line){
-            return 1.33F;
+            return 1.43F;
         }
         if(6==line){
-            return 1.15F;
+            return 1.36F;
         }
         if(7==line){
             return 0F;

@@ -238,3 +238,6 @@ java.lang.ArrayIndexOutOfBoundsException: 90368
 [2019-06-21 09:52:50 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
 [2019-06-21 09:52:50 INFO][com.ljy.misc.EventConsumer]logic thread starting
 [2019-06-21 09:52:50 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-06-24 09:44:40 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-06-24 09:44:40 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-06-24 09:44:40 INFO][com.ljy.misc.EventConsumer]logic thread started
