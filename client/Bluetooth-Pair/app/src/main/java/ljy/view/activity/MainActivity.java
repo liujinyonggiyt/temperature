@@ -1,5 +1,6 @@
 package ljy.view.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -53,13 +54,13 @@ public class MainActivity extends BaseActivity {
 //                showOutdateDialog();
 //            }
 
+
             //检查版本更新
             {
                 UpdateManager.setDebuggable(true);
                 UpdateManager.setWifiOnly(false);
                 UpdateManager.setUrl(mCheckUrl, "yyb");
                 UpdateManager.check(this);
-//                checkUpdateAgent(false, true, false, false, true, 998);
             }
 
         }catch (Exception e){

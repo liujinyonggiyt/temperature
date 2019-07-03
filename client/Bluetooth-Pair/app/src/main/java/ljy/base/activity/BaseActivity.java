@@ -3,6 +3,7 @@ package ljy.base.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.view.WindowManager;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
+import ezy.boost.update.UpdateUtil;
 import ljy.utils.MyLog;
 
 
@@ -24,6 +26,7 @@ import ljy.utils.MyLog;
 
 public abstract class BaseActivity extends Activity {
     public final String Tag = this.getClass().getSimpleName();
+    public static final int ACTIVITY_RESULT_INSTALL = 1;
     public Activity mActivity;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -75,5 +78,12 @@ public abstract class BaseActivity extends Activity {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (/*resultCode == RESULT_OK &&*/ requestCode == ACTIVITY_RESULT_INSTALL) {
+            UpdateUtil.install(this, false);
+        }
+    }
     protected abstract int getLayoutId();
 }

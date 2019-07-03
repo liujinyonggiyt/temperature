@@ -58,7 +58,7 @@ public class UpdateChecker implements IUpdateChecker {
             }
         } catch (Exception e) {
             agent.setError(new UpdateError(UpdateError.CHECK_NETWORK_IO));
-            MyLog.e(TAG, "url:"+url+"\r\n"+e.getMessage(), e);
+//            MyLog.e(TAG, "url:"+url+"\r\n"+e.getMessage(), e);
         } finally {
             if (connection != null) {
                 connection.disconnect();

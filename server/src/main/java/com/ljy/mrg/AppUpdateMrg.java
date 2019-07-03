@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -112,7 +111,7 @@ public class AppUpdateMrg {
             updateInfo.setSize(appSize);
             updateInfo.setIsForce(properties.getProperty("isForce", "false"));
             updateInfo.setIsIgnorable(properties.getProperty("isIgnorable", "false"));
-            updateInfo.setIsSilen(properties.getProperty("isSilent", "false"));
+            updateInfo.setIsSilent(properties.getProperty("isSilent", "false"));
         }
 
         channel.writeAndFlush(new HttpResponseJsonObjMsg(updateInfo));

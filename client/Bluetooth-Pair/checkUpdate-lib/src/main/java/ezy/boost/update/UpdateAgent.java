@@ -33,7 +33,8 @@ import android.widget.Toast;
 import java.io.File;
 
 class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
-
+    private static final String TAG = UpdateAgent.class.getSimpleName();
+    private Activity activity;
     private Context mContext;
     private String mUrl;
     private File mTmpFile;
@@ -54,17 +55,18 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     private OnDownloadListener mOnDownloadListener;
     private OnDownloadListener mOnNotificationDownloadListener;
 
-    public UpdateAgent(Context context, String url, boolean isManual, boolean isWifiOnly, int notifyId) {
-        mContext = context.getApplicationContext();
+    public UpdateAgent(Activity activity, String url, boolean isManual, boolean isWifiOnly, int notifyId) {
+        this.activity = activity;
+        mContext = activity.getApplicationContext();
         mUrl = url;
         mIsManual = isManual;
         mIsWifiOnly = isWifiOnly;
-        mDownloader = new DefaultUpdateDownloader(mContext);
-        mPrompter = new DefaultUpdatePrompter(context);
-        mOnFailureListener = new DefaultFailureListener(context);
-        mOnDownloadListener = new DefaultDialogDownloadListener(context);
+        mDownloader = new DefaultUpdateDownloader(activity);
+        mPrompter = new DefaultUpdatePrompter(activity);
+        mOnFailureListener = new DefaultFailureListener(activity);
+        mOnDownloadListener = new DefaultDialogDownloadListener(activity);
         if (notifyId > 0) {
-            mOnNotificationDownloadListener = new DefaultNotificationDownloadListener(mContext, notifyId);
+            mOnNotificationDownloadListener = new DefaultNotificationDownloadListener(activity, notifyId);
         } else {
             mOnNotificationDownloadListener = new DefaultDownloadListener();
         }
@@ -254,7 +256,7 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     }
 
     void doInstall() {
-        UpdateUtil.install(mContext, mApkFile, mInfo.isForce);
+        UpdateUtil.installAll(activity, mApkFile, mInfo.isForce);
     }
 
     void doFailure(UpdateError error) {
@@ -264,9 +266,9 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     }
 
     private static class DefaultUpdateDownloader implements IUpdateDownloader {
-        final Context mContext;
+        final Activity mContext;
 
-        public DefaultUpdateDownloader(Context context) {
+        public DefaultUpdateDownloader(Activity context) {
             mContext = context;
         }
 
@@ -285,60 +287,64 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
 
     private static class DefaultUpdatePrompter implements IUpdatePrompter {
 
-        private Context mContext;
+        private Activity mContext;
 
-        public DefaultUpdatePrompter(Context context) {
+        public DefaultUpdatePrompter(Activity context) {
             mContext = context;
         }
 
         @Override
         public void prompt(IUpdateAgent agent) {
-            if (mContext instanceof Activity && ((Activity) mContext).isFinishing()) {
-                return;
-            }
-            final UpdateInfo info = agent.getInfo();
-            String size = Formatter.formatShortFileSize(mContext, info.size);
-            String content = String.format("最新版本：%1$s\n新版本大小：%2$s\n\n更新内容\n%3$s", info.versionName, size, info.updateContent);
-
-            final AlertDialog dialog = new AlertDialog.Builder(mContext).create();
-
-            dialog.setTitle("应用更新");
-            dialog.setCancelable(false);
-            dialog.setCanceledOnTouchOutside(false);
-
-
-            float density = mContext.getResources().getDisplayMetrics().density;
-            TextView tv = new TextView(mContext);
-            tv.setMovementMethod(new ScrollingMovementMethod());
-            tv.setVerticalScrollBarEnabled(true);
-            tv.setTextSize(14);
-            tv.setMaxHeight((int) (250 * density));
-
-            dialog.setView(tv, (int) (25 * density), (int) (15 * density), (int) (25 * density), 0);
-
-
-            DialogInterface.OnClickListener listener = new DefaultPromptClickListener(agent, true);
-
-            if (info.isForce) {
-                tv.setText("您需要更新应用才能继续使用\n\n" + content);
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", listener);
-            } else {
-                tv.setText(content);
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "立即更新", listener);
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "以后再说", listener);
-                if (info.isIgnorable) {
-                    dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "忽略该版", listener);
+            try{
+                if (mContext instanceof Activity && ((Activity) mContext).isFinishing()) {
+                    return;
                 }
+                final UpdateInfo info = agent.getInfo();
+                String size = Formatter.formatShortFileSize(mContext, info.size);
+                String content = String.format("最新版本：%1$s\n新版本大小：%2$s\n\n更新内容\n%3$s", info.versionName, size, info.updateContent);
+
+                final AlertDialog dialog = new AlertDialog.Builder(mContext).create();
+
+                dialog.setTitle("应用更新");
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+
+
+                float density = mContext.getResources().getDisplayMetrics().density;
+                TextView tv = new TextView(mContext);
+                tv.setMovementMethod(new ScrollingMovementMethod());
+                tv.setVerticalScrollBarEnabled(true);
+                tv.setTextSize(14);
+                tv.setMaxHeight((int) (250 * density));
+
+                dialog.setView(tv, (int) (25 * density), (int) (15 * density), (int) (25 * density), 0);
+
+
+                DialogInterface.OnClickListener listener = new DefaultPromptClickListener(agent, true);
+
+                if (info.isForce) {
+                    tv.setText("您需要更新应用才能继续使用\n\n" + content);
+                    dialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", listener);
+                } else {
+                    tv.setText(content);
+                    dialog.setButton(DialogInterface.BUTTON_POSITIVE, "立即更新", listener);
+                    dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "以后再说", listener);
+                    if (info.isIgnorable) {
+                        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "忽略该版", listener);
+                    }
+                }
+                dialog.show();
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            dialog.show();
         }
     }
 
     private static class DefaultFailureListener implements OnFailureListener {
 
-        private Context mContext;
+        private Activity mContext;
 
-        public DefaultFailureListener(Context context) {
+        public DefaultFailureListener(Activity context) {
             mContext = context;
         }
 
@@ -350,10 +356,10 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     }
 
     private static class DefaultDialogDownloadListener implements OnDownloadListener {
-        private Context mContext;
+        private Activity mContext;
         private ProgressDialog mDialog;
 
-        public DefaultDialogDownloadListener(Context context) {
+        public DefaultDialogDownloadListener(Activity context) {
             mContext = context;
         }
 
@@ -387,11 +393,11 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     }
 
     private static class DefaultNotificationDownloadListener implements OnDownloadListener {
-        private Context mContext;
+        private Activity mContext;
         private int mNotifyId;
         private NotificationCompat.Builder mBuilder;
 
-        public DefaultNotificationDownloadListener(Context context, int notifyId) {
+        public DefaultNotificationDownloadListener(Activity context, int notifyId) {
             mContext = context;
             mNotifyId = notifyId;
         }

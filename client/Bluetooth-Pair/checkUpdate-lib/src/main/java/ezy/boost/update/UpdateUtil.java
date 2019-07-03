@@ -16,7 +16,9 @@
 
 package ezy.boost.update;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -26,7 +28,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -106,15 +111,47 @@ public class UpdateUtil {
         return !TextUtils.isEmpty(md5) && md5.equals(context.getSharedPreferences(PREFS, 0).getString(KEY_IGNORE, ""));
     }
 
-    public static void install(Context context, boolean force) {
+    public static void install(Activity context, boolean force) {
         String md5 = context.getSharedPreferences(PREFS, 0).getString(KEY_UPDATE, "");
         File apk = new File(context.getExternalCacheDir(), md5 + ".apk");
         if (UpdateUtil.verify(apk, md5)) {
-            install(context, apk, force);
+            installAll(context, apk, force);
         }
     }
 
-    public static void install(Context context, File file, boolean force) {
+    /**
+     * @param context
+     * @param file
+     * @param force
+     */
+    public static void installAll(final Activity context, File file, boolean force){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            boolean isGranted = context.getPackageManager().canRequestPackageInstalls();
+            if (isGranted){
+                installSeven(context, file, force);//安装应用的逻辑(写自己的就可以)
+            }else{
+                new AlertDialog.Builder(context)
+                        .setCancelable(false)
+                        .setTitle("安装应用需要打开未知来源权限，请去设置中开启权限")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface d, int w) {
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                                context.startActivityForResult(intent, 1);
+                            }
+                        })
+                        .show();
+            }
+        }else{
+            installSeven(context, file, force);
+        }
+    }
+    /**
+     * android 1-7
+     * @param context
+     * @param file
+     * @param force
+     */
+    public static void installSeven(Context context, File file, boolean force) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");

@@ -16,6 +16,7 @@
 
 package ezy.boost.update;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -43,26 +44,21 @@ public class UpdateManager {
         UpdateUtil.DEBUG = debuggable;
     }
 
-    public static void install(Context context) {
-
-        UpdateUtil.install(context, true);
-    }
-
-    public static void check(Context context) {
+    public static void check(Activity context) {
         create(context).check();
     }
 
-    public static void checkManual(Context context) {
+    public static void checkManual(Activity context) {
         create(context).setManual(true).check();
     }
 
-    public static Builder create(Context context) {
+    public static Builder create(Activity context) {
         UpdateUtil.ensureExternalCacheDir(context);
         return new Builder(context).setWifiOnly(sIsWifiOnly);
     }
 
     public static class Builder {
-        private Context mContext;
+        private Activity mContext;
         private String mUrl;
         private byte[] mPostData;
         private boolean mIsManual;
@@ -78,7 +74,7 @@ public class UpdateManager {
         private IUpdateChecker mChecker;
         private IUpdateDownloader mDownloader;
 
-        public Builder(Context context) {
+        public Builder(Activity context) {
             mContext = context;
         }
 

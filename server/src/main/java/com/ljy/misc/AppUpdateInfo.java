@@ -9,7 +9,7 @@ public class AppUpdateInfo {
     // 是否有新版本
     private boolean hasUpdate;
     // 是否静默下载：有新版本时不提示直接下载
-    private String isSilen;
+    private String isSilent;
     // 是否强制安装：不安装无法使用app
     private String isForce;
     // 是否可忽略该版本
@@ -80,12 +80,12 @@ public class AppUpdateInfo {
         this.size = size;
     }
 
-    public String getIsSilen() {
-        return isSilen;
+    public String getIsSilent() {
+        return isSilent;
     }
 
-    public void setIsSilen(String isSilen) {
-        this.isSilen = isSilen;
+    public void setIsSilent(String isSilent) {
+        this.isSilent = isSilent;
     }
 
     public String getIsForce() {

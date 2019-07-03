@@ -41,7 +41,7 @@ public class APP extends Application {
         Logger.addLogAdapter(new DiskLogAdapter(){
             @Override
             public boolean isLoggable(int priority, @Nullable String tag) {
-                return false;
+                return true;
             }
         });
         MyLog.i(TAG, "app on create!");
