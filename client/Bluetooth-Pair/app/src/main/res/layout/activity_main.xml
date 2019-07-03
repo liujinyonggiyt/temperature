@@ -3,19 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="ljy.view.activity.BluetoothListActivity">
-
         <ljy.widget.TitleBar
             android:id="@+id/titlebar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></ljy.widget.TitleBar>
-
         <Button
             android:id="@+id/buttion_go_blue"
             android:layout_width="wrap_content"

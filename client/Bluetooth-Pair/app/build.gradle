@@ -7,7 +7,7 @@ android {
         applicationId "hlq.bluetooth"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
+        versionCode 8
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -47,5 +47,7 @@ dependencies {
     implementation files('libs/notificationlog-0.1.0.jar')
     compile 'io.netty:netty-all:4.1.36.Final'
     implementation project(':zxing-lib')
+    implementation project(':checkUpdate-lib')
     compile 'org.litepal.android:core:2.0.0' //sqlite ORM
+//    compile 'com.github.czy1121:update:1.1.1'//检查更新app
 }

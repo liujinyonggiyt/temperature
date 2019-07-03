@@ -1,0 +1,61 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+	package
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:11-37
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:1:1-18:12
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:4:5-108
+	android:maxSdkVersion
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:4:79-105
+	android:name
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:4:22-78
+application
+ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:6:5-17:19
+provider#ezy.boost.update.UpdateFileProvider
+ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:8:9-16:20
+	android:grantUriPermissions
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:12:13-47
+	android:authorities
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:10:13-70
+	android:exported
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:11:13-37
+	android:name
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:9:13-63
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:13:13-15:60
+	android:resource
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:15:17-58
+	android:name
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml:14:17-67
+uses-sdk
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+		ADDED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml
+		INJECTED from D:\program\android\project-temperature\client\Bluetooth-Pair\checkUpdate-lib\src\main\AndroidManifest.xml

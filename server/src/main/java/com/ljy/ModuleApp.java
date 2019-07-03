@@ -24,5 +24,10 @@ public class ModuleApp extends AbstractModule {
         bind(ClientProtoHandlerMrg.class).in(Singleton.class);
         bind(ClientSessionMrg.class).in(Singleton.class);
         bind(SystemTimeMrg.class).in(Singleton.class);
+        bind(JsonMrg.class).in(Singleton.class);
+        bind(HttpMrg.class).in(Singleton.class);
+        bind(AppUpdateMrg.class).in(Singleton.class);
+        bind(HttpEventQueueMrg.class).in(Singleton.class);
+        bind(HttpEventHandlerMrg.class).in(Singleton.class);
     }
 }

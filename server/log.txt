@@ -241,3 +241,56 @@ java.lang.ArrayIndexOutOfBoundsException: 90368
 [2019-06-24 09:44:40 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
 [2019-06-24 09:44:40 INFO][com.ljy.misc.EventConsumer]logic thread starting
 [2019-06-24 09:44:40 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-02 18:24:51 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-07-02 18:24:51 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-07-02 18:24:51 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-02 18:25:31 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-07-02 18:25:31 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-07-02 18:25:31 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-02 18:27:30 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-07-02 18:27:30 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-07-02 18:27:30 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-02 18:32:12 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-07-02 18:32:12 INFO][com.ljy.mrg.HttpMrg]http prot listen success!port:10002
+[2019-07-02 18:32:12 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-07-02 18:32:12 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-02 18:34:32 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-07-02 18:34:32 INFO][com.ljy.mrg.HttpMrg]http prot listen success!port:10002
+[2019-07-02 18:34:32 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-07-02 18:34:32 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-02 18:34:45 ERROR][com.ljy.World]
+java.lang.NullPointerException
+	at com.ljy.mrg.AppUpdateMrg.checkUpdate(AppUpdateMrg.java:97)
+	at com.ljy.mrg.HttpMrg$$Lambda$8/198112003.handler(Unknown Source)
+	at com.ljy.mrg.HttpEventHandlerMrg.tick(HttpEventHandlerMrg.java:56)
+	at com.ljy.mrg.HttpMrg.tick(HttpMrg.java:72)
+	at com.ljy.World.loop(World.java:138)
+	at com.ljy.misc.EventConsumer.loopTemplate(EventConsumer.java:26)
+	at com.ljy.misc.SleepingWaitExtendStrategy.waitFor(SleepingWaitExtendStrategy.java:41)
+	at com.lmax.disruptor.ProcessingSequenceBarrier.waitFor(ProcessingSequenceBarrier.java:55)
+	at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[2019-07-02 18:42:25 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-07-02 18:42:25 INFO][com.ljy.mrg.HttpMrg]http prot listen success!port:10002
+[2019-07-02 18:42:25 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-07-02 18:42:25 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-02 18:42:29 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:1
+[2019-07-02 18:46:10 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:2
+[2019-07-02 18:46:57 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:3
+[2019-07-02 18:52:28 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:4
+[2019-07-03 09:54:25 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:4
+[2019-07-03 09:56:15 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:5
+[2019-07-03 09:56:15 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:5
+[2019-07-03 09:57:57 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:6
+[2019-07-03 09:57:58 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:6
+[2019-07-03 09:58:17 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:3
+[2019-07-03 10:00:54 INFO][com.ljy.mrg.TcpOuterMrg]server out tcp listen success!ip:0:0:0:0:0:0:0:0, port:10001
+[2019-07-03 10:00:54 INFO][com.ljy.mrg.HttpMrg]http prot listen success!port:10002
+[2019-07-03 10:00:54 INFO][com.ljy.misc.EventConsumer]logic thread starting
+[2019-07-03 10:00:54 INFO][com.ljy.misc.EventConsumer]logic thread started
+[2019-07-03 10:01:14 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:3
+[2019-07-03 10:20:46 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:3
+[2019-07-03 11:12:43 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:5
+[2019-07-03 11:26:25 INFO][com.ljy.mrg.AppUpdateMrg]check update success!newVersion:6

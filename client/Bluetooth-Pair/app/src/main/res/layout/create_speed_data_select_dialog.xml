@@ -14,10 +14,11 @@
 
     <ListView
         android:layout_marginTop="3dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:id="@+id/speed_data_select_listView"></ListView>
+        android:layout_width="wrap_content"
+        android:id="@+id/speed_data_select_listView"
+        android:dividerHeight="5dp"></ListView>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"

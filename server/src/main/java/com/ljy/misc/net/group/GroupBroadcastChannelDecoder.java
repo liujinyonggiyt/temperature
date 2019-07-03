@@ -113,7 +113,6 @@ public class GroupBroadcastChannelDecoder extends SimpleChannelInboundHandler<St
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
         ctx.close();
         logger.error("", cause);
     }

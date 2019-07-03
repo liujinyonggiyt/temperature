@@ -2,8 +2,10 @@ package ljy.view.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -44,6 +46,10 @@ public class CalculateActivity extends BaseActivity {
     TextView text_cal_waterwide;
     @BindView(R.id.edit_cal_anbian)
     EditText edit_cal_anbian;
+    @BindView(R.id.scroll_cal_1)
+    ScrollView scroll_cal_1;
+
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,7 @@ public class CalculateActivity extends BaseActivity {
 
             titlebar.setTitle("计算");
             titlebar.setBackgroundResource(R.color.blue);
-            titlebar.setImmersive(true);
+            titlebar.setImmersive(false);
             titlebar.setTitleColor(Color.WHITE);
 
         }catch (Exception e){
@@ -341,9 +347,11 @@ public class CalculateActivity extends BaseActivity {
         speed.setText("0");
         tableRow.addView(speed);
 
+
         EditText distance = new EditText(CalculateActivity.this);//起点距
         distance.setText("0");
         tableRow.addView(distance);
+
 
         EditText deep = new EditText(CalculateActivity.this);//水深
         deep.setText("0");

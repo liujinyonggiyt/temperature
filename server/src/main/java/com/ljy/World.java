@@ -9,13 +9,11 @@ import com.ljy.misc.msg.ClientRequest;
 import com.ljy.misc.msg.ServerResponse;
 import com.ljy.misc.msg.SystemTimeMrg;
 import com.ljy.misc.session.ClientSession;
-import com.ljy.misc.trigger.Timer;
 import com.ljy.misc.utils.AnyUtils;
 import com.ljy.mrg.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -33,17 +31,21 @@ public class World extends EventConsumer<LogicEvent> {
     private final SystemTimeMrg systemTimeMrg;
     private final SendMrg sendMrg;
     private final TcpOuterMrg tcpOuterMrg;
+    private final AppUpdateMrg appUpdateMrg;
+    private final HttpMrg httpMrg;
 
     protected final Map<LogicEventType,AsynchronizedEventHandler> logicEventMrg = new EnumMap<>(
             LogicEventType.class);
     @Inject
-    public World(TimerMrg timerMrg, ClientProtoHandlerMrg clientProtoHandlerMrg, ClientSessionMrg clientSessionMrg, SystemTimeMrg systemTimeMrg, SendMrg sendMrg, TcpOuterMrg tcpOuterMrg) {
+    public World(TimerMrg timerMrg, ClientProtoHandlerMrg clientProtoHandlerMrg, ClientSessionMrg clientSessionMrg, SystemTimeMrg systemTimeMrg, SendMrg sendMrg, TcpOuterMrg tcpOuterMrg, AppUpdateMrg appUpdateMrg, HttpMrg httpMrg) {
         this.timerMrg = timerMrg;
         this.clientProtoHandlerMrg = clientProtoHandlerMrg;
         this.clientSessionMrg = clientSessionMrg;
         this.systemTimeMrg = systemTimeMrg;
         this.sendMrg = sendMrg;
         this.tcpOuterMrg = tcpOuterMrg;
+        this.appUpdateMrg = appUpdateMrg;
+        this.httpMrg = httpMrg;
     }
 
     protected void initWhenThreadStart() throws Exception {
@@ -132,6 +134,11 @@ public class World extends EventConsumer<LogicEvent> {
         }
 
         timerMrg.tickTrigger();
+        try {
+            httpMrg.tick();
+        } catch (Exception e) {
+            logger.error("", e);
+        }
     }
 
     protected void onEvent(LogicEvent event, long sequence, boolean endOfBatch) throws Throwable {
